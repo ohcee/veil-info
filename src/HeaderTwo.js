@@ -6,22 +6,36 @@ function HeaderTwo() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await axios.get(
-        "https://api.coingecko.com/api/v3/simple/price?ids=veil&vs_currencies=usd"
-      );
-      setVeilPrice(result.data.veil.usd);
+      try {
+        const response = await axios.get("http://localhost:3001/nonkyc-veil-xmr", {
+          headers: {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.1 Safari/537.36'
+          }
+        });
+        const lastPrice = response.data.lastPrice;
+        // Format the price to show one more decimal point
+        const formattedPrice = parseFloat(lastPrice).toFixed(8);
+        setVeilPrice(formattedPrice);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        // Handle error (e.g., setVeilPrice(null) or show an error message)
+      }
     };
+    
+
     fetchData();
+
     const interval = setInterval(() => {
       fetchData();
-    }, 120000); // every 2 minutes
+    }, 120000); // Fetch data every 2 minutes
+
     return () => clearInterval(interval);
-  }, []);
+  }, []); // Empty dependency array ensures the effect runs once after the initial render
 
   return (
     <div>
-      <h4>Veil USD Coingecko price 
-      {veilPrice !== null ? <p>${veilPrice} USD</p> : "Loading..."}
+      <h4>
+        Veil XMR NOKYC price {veilPrice !== null ? <p>{veilPrice} XMR</p> : "Loading..."}
       </h4>
     </div>
   );

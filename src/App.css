@@ -7,7 +7,7 @@
   align-items: center;
   justify-content: space-between;
   background-color: black;
-  color: #fff;
+  color: lightslategray;
   opacity: 95%;
   border-bottom: 1px solid grey;
   margin-top: -5px;
@@ -17,27 +17,31 @@
 }
 
 h2 {
-  color: #fff;
+  color: lightslategray;
   text-align: center;
-  
+  overflow: uset;
+  width: auto;
 }
 
 .header img {
-  width: 45px;
+  width: auto;
   height: 45px;
   padding-top: 0px;
   padding-left: 15px;
   padding-right: 15px;
+  overflow: hidden;
+  margin-left: 5px;
 }
 
 .row {
   display: flex;
   flex-direction: row;
-  color: black;
+  color: lightgrey;
   width: auto;
   text-align: center;
   justify-content: center;
   opacity: 100%;
+  overflow: auto;
 }
 
 .column {
@@ -55,10 +59,10 @@ table {
   border-collapse: collapse;
   display: flex;
   width: auto;
-  color: #fff;
+  color: lightslategray;
   font-weight: bold;
   background-color: black;
-  margin: 10px;
+  margin: px;
   opacity: 100%;
   overflow: auto;
 }
@@ -66,15 +70,17 @@ table {
 td {
   padding: 3px; 
   background-color: black;
+  overflow: auto;
 }
 
 .table-row {
   border: 1px #105aef solid;
   font-size: 15px;
+  overflow: auto;
 }
 
 p {
-  color: #fff;
+  color: lightslategray;
 }
 
 .box {
@@ -86,10 +92,11 @@ h3 {
   text-align: center;
   justify-content: center;
   color: #105aef;
+  overflow: hidden;
 }
 
 a:link {
-  color: #fff;
+  color: lightslategray;
   font-weight: bold;
 }
 
@@ -133,21 +140,25 @@ img {
   justify-content: center;
   display: flex;
   align-items: center;
+  overflow: hidden;
 }
 
 nav {
   display: flex;
   align-items: center; 
+  overflow: hidden;
 }
 
 nav a {
   color: #105aef;
   text-decoration: wavy;
-  padding: 1px 7px;
+  padding: 1px 5px;
+  
 }
 
 h1 {
   color: #105aef;
+  overflow: hidden;
 }
 
 li {
@@ -157,6 +168,7 @@ li {
   display: flexbox;
   font-weight: bold;
   font-size: small;
+  overflow: hidden;
 }
 
 h5 {
@@ -164,29 +176,22 @@ h5 {
   font-weight: bolder;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   text-align: center;
+  overflow: hidden;
 }
 
 h6 {
   color: #105aef;
+  overflow: hidden;
 }
 
 .nav-links {
   display: flex;
-  align-items: center;
+  align-items: safe;
   padding-right: 25px;
 }
 
-.nav-links h4 {
-  margin: 0;
-  padding: 0 10px;
-}
-
-.nav-links div {
-  margin: 0 5px; 
-}
-
 .BestBlockHash {
-  padding-left: 15px;
+  overflow: hidden;
 }
 
 .nav-links-container {

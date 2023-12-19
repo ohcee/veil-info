@@ -25,13 +25,13 @@ function HeaderOne() {
     };
 
     fetchData();
-    const intervalId = setInterval(fetchData, 120000); // 2 minutes
+    const intervalId = setInterval(fetchData, 300000); // 5 minutes
 
     return () => clearInterval(intervalId);
   }, []);
 
 return (
-  <h4>VEIL USDT Probit Price <p>${isNaN(veilPrice) ? 'Loading...' : veilPrice.toFixed(4)} USDT</p></h4>
+  <h4>VEIL USDT Probit Price <p>${isNaN(veilPrice) ? 'Loading...' : veilPrice.toFixed(6)} USDT</p></h4>
 );
 
 }

@@ -18,7 +18,7 @@ function App() {
   return (
     <div className="App">
       <header className="header">
-        <a href="https://github.com/Veil-Project" target="_blank" rel="noopener noreferrer"><img src={Veil_mark_circle_250px} alt="White Veil logo" /></a><h4>Veil Info</h4> 
+        <a href="https://github.com/Veil-Project" target="_blank" rel="noopener noreferrer"><img src={Veil_mark_circle_250px} alt="White Veil logo" /></a><h2>Veil Info</h2> 
           <BestBlockHash />
         <nav>
          <div className="nav-links-container">
@@ -33,10 +33,10 @@ function App() {
             <h5><a href="https://veil.tools/" target="_blank" rel="noopener noreferrer">Veil Tools</a></h5>
            </div>
            <div>
-            <h5><a href="https://explorer.veil-project.com" target="_blank" rel="noopener noreferrer">Veil Explorer</a></h5>
+            <h5><a href="https://explorer.veil-project.com" target="_blank" rel="noopener noreferrer">Explorer</a></h5>
            </div>
            <div> 
-            <h5><a href="https://veil-stats.com/" target="_blank" rel="noopener noreferrer">Veil Stats</a></h5>
+            <h5><a href="https://github.com/steel97/veil_wallet/releases" target="_blank" rel="noopener noreferrer">Light Wallet</a></h5>
            </div>
            <div>
             <h5><a href="https://discord.veil-project.com" target="_blank" rel="noopener noreferrer">Discord</a></h5>

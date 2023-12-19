@@ -6,6 +6,17 @@ const app = express();
 
 app.use(cors());
 
+app.use('/nonkyc-veil-xmr', createProxyMiddleware({
+  target: 'https://nonkyc.io',
+  changeOrigin: true,
+  pathRewrite: {
+    '^/nonkyc-veil-xmr': '/api/v2/market/getbysymbol/VEIL_XMR'
+  }
+}));
+
+
+
+
 app.use('/api', createProxyMiddleware({ 
   target: 'https://explorer-api.veil-project.com', 
   changeOrigin: true,
@@ -39,6 +50,7 @@ app.use('/coingecko', createProxyMiddleware({
     proxyReq.path += `?ids=veil&vs_currencies=usd`;
   }
 }));
+
 
 const thirtyMinutes = 30 * 60 * 1000; // 30 minutes in milliseconds
 

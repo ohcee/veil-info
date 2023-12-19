@@ -49,8 +49,7 @@ function BlockchainInfo() {
   } else {
     return (
       <div>
-        <h4>Difficulty Data</h4>
-        <div className=""></div>  
+        <h4>Difficulty Data</h4>  
         <table>
           <tbody>
             <tr className='table-row'>
