@@ -31,7 +31,7 @@ function HeaderOne() {
   }, []);
 
 return (
-  <h4>VEIL USDT Probit Price <p>${isNaN(veilPrice) ? 'Loading...' : veilPrice.toFixed(6)} USDT</p></h4>
+  <h3>VEIL USDT Probit Price <p>${isNaN(veilPrice) ? 'Loading...' : veilPrice.toFixed(6)} USDT</p></h3>
 );
 
 }

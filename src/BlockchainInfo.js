@@ -49,11 +49,11 @@ function BlockchainInfo() {
   } else {
     return (
       <div>
-        <h4>Difficulty Data</h4>  
+        <h3>Difficulty Data</h3>  
         <table>
           <tbody>
             <tr className='table-row'>
-              <td className='table-cell' style={{ color: '#3890c8' }}>(Proof-of-Stake) Difficulty</td>
+              <td className='table-cell' style={{ color: '#3890c8' }}>(PoS) Difficulty</td>
               <td className='table-cell'>{getblockchaininfo.difficulty_pos}</td>
             </tr>
             <tr className='table-row'>
@@ -71,7 +71,7 @@ function BlockchainInfo() {
           </tbody>
         </table>
         <div className='border-bottom'></div>
-         <h4>Mining Software</h4>
+         <h3>Mining Software</h3>
          <ul>
            <li><h3><a href="https://github.com/trexminer/T-Rex" target='_blank' rel="noopener noreferrer">T-Rex Miner (Nvidia)</a></h3></li>
            <li><h3><a href="https://github.com/andru-kun/wildrig-multi" target='_blank' rel="noopener noreferrer">Wildrig-Miner (AMD & Nvida)</a></h3></li>
@@ -79,7 +79,7 @@ function BlockchainInfo() {
            <li><h3><a href="https://github.com/us77ipis/xmrig-veil" target='_blank' rel="noopener noreferrer">XMRIG (CPU)</a></h3></li>
            <li><h3><a href="https://github.com/us77ipis/veil-node-stratum-proxy" target='_blank' rel="noopener noreferrer">Solo Mining Proxy</a></h3></li>
          </ul>
-         <h4>Pools</h4>
+         <h3>Pools</h3>
          <ul>
            <li><h3><a href="https://fastpool.xyz/veil-rx/" target='_blank' rel="noopener noreferrer">Fastpool (RandomX)</a></h3></li>
          </ul>

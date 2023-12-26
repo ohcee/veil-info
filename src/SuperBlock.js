@@ -42,9 +42,9 @@ const SuperBlock = () => {
   return (
     <div>
       {blockchainInfo && remainingTime && (
-        <h4>Block number <p>{blockchainInfo.next_super_block}</p>is the next <p>SuperBlock</p>It's in approximately <p>{remainingTime.days} days, {remainingTime.hours} hrs, {remainingTime.minutes} minutes</p></h4>
+        <h3>Block number <p>{blockchainInfo.next_super_block}</p>is the next <p>SuperBlock</p>It's in approximately <p>{remainingTime.days} days, {remainingTime.hours} hours, {remainingTime.minutes} minutes</p></h3>
       )} 
-      <h6>Learn about the <a href="https://veil-project.com/technology/" target="_blank" rel="noopener noreferrer">superblock and emissions</a></h6>
+      <h6>Learn about the <a href="https://veil-project.com/uploads/Superblocks.202307.pdf" target="_blank" rel="noopener noreferrer">Superblock Data</a></h6>
     </div>
   );
 };

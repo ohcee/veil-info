@@ -22,15 +22,9 @@ const BestBlockHash = () => {
   return (
     <div className="BestBlockHash">
       {blockchainInfo && (
-        <h5>{/*style={{
-          maxWidth: "630px", 
-          whiteSpace: "nowrap", 
-          overflow: "hidden", 
-          textOverflow: "ellipsis",
-          color: "#grey",
-        }}*/} 
+        <h3> 
           Best Block Hash: <br></br>{blockchainInfo.bestblockhash}
-        </h5>
+        </h3>
       )}
     </div>
   );

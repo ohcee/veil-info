@@ -31,7 +31,7 @@ function HeaderThree() {
   }, []);
 
   return (
-    <h4>VEIL BTC Tradeogre Price <p>{typeof veilPrice === 'number' ? veilPrice.toFixed(8) + ' BTC' : 'Loading...'}</p></h4>
+    <h3>VEIL BTC Tradeogre Price <p>{typeof veilPrice === 'number' ? veilPrice.toFixed(8) + ' BTC' : 'Loading...'}</p></h3>
   );
 }
 

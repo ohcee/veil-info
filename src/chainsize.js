@@ -21,7 +21,7 @@ const Chainsize = () => {
     return (
         <div className="csheader">
             {blockchainInfo && (
-                <h4>Currently you need <p>{sizeInGB.toFixed(2)} GB</p> of free storage to download <p>the blockchain</p>to participate in<p><b>STAKING</b> with the core wallet</p></h4>
+                <h3>Currently you need <p>{sizeInGB.toFixed(2)} GB</p> of free storage to download <p>the blockchain</p>to participate in<p><b>STAKING</b> with the core wallet</p></h3>
             )}
             <h6><a href="https://veil.freshdesk.com/support/solutions/articles/43000468343-staking-faq" target="_blank" rel="noopener noreferrer">Staking </a>FAQ</h6>
         </div>

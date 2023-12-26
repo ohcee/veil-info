@@ -40,7 +40,7 @@ function ChainalgoStats() {
   
     return (
       <div>
-        <h4>Block Split</h4>
+        <h3>Block Split</h3>
         <table>
           <tbody>
             <tr className='table-row'>
@@ -74,7 +74,7 @@ function ChainalgoStats() {
           labelStyle={{
             fontSize: '5px',
             fontWeight: 'bolder',
-            fontColor: 'white',
+            overflow: 'ellipsis',
           }}
         />
         </div>

@@ -34,9 +34,7 @@ function HeaderTwo() {
 
   return (
     <div>
-      <h4>
-        Veil XMR NOKYC price {veilPrice !== null ? <p>{veilPrice} XMR</p> : "Loading..."}
-      </h4>
+      <h3>Veil XMR NOKYC price {veilPrice !== null ? <p>{veilPrice} XMR</p> : "Loading..."}</h3>
     </div>
   );
 }

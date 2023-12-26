@@ -20,11 +20,12 @@ const Currentblock = () => {
   }, []);
 
   return (
-    <>
+    <div>
      {blockchainInfo && (
-      <h4>The current Block number is <p>{blockchainInfo.blocks}</p>VEIL has a<p>1 minute block time</p>and is a<p>50/50 PoS/PoW Hybrid</p></h4>
-     )}
-    </>
+      <h3>The current Block number is <p>{blockchainInfo.blocks}</p>VEIL has a<p>1 minute block time</p>and is a<p>50/50 PoS/PoW Hybrid</p></h3>
+     )} 
+    <h6><a href="https://veil-project.com/faqs/" target="_blank" rel="noopener noreferrer">FAQ</a></h6>
+    </div>
   );
 };
 

@@ -20,7 +20,7 @@ const VeilMarketData = () => {
 
   return (
     <div>
-      <h4>Market Data</h4> 
+      <h3>Market Data</h3> 
       <table>
         <tbody>
           <tr className="table-row">
@@ -61,7 +61,7 @@ const VeilMarketData = () => {
         </tbody>
       </table>
       <h6>Data from <a href="https://www.coingecko.com/" target="_blank" rel="noopener noreferrer">CoinGecko</a></h6>
-      <h4>Exchanges</h4>
+      <h3>Exchanges</h3>
       <h5><a href="https://tradeogre.com/exchange/BTC-VEIL" target="_blank" rel="noopener noreferrer">Tradeogre VEIL-BTC</a> </h5>
       <h5><a href="https://www.probit.com/app/exchange/VEIL-USDT" target="_blank" rel="noopener noreferrer">Probit VEIL-USDT</a> </h5>
       <h5><a href="https://www.probit.com/app/exchange/VEIL-BTC" target="_blank" rel="noopener noreferrer">Probit VEIL-BTC</a> </h5>
