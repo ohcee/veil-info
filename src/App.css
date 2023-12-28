@@ -52,10 +52,7 @@ table {
   width: auto;
   color: lightslategray;
   font-weight: bold;
-  background-color: black;
-  /*border-bottom: grey solid 1px;
-  border-top: grey solid 1px;*/
-  overflow: auto;
+  background-color: black; 
 }
 
 td {
@@ -152,6 +149,18 @@ h6 {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   z-index: 1;
 }
+.nav-link-dropdown a:hover {
+  color: greenyellow;
+  display: block;
+  position: absolute;
+  background-color: black;
+  top: 8%;
+  left: 93%;
+  min-width: 100px;
+  max-width: 100px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  z-index: 1; 
+}
 
 .nav-links-dropdown a {
   color: #105aef;
@@ -162,6 +171,7 @@ h6 {
 
 .nav-links-dropdown a:hover {
   color: greenyellow;
+  
 }
 
 .BestBlockHash {
@@ -169,13 +179,8 @@ h6 {
   margin-right: 25px;
 }
 
-.nav-links-container {
-  overflow: hidden;
-}
-
-.nav-links-container.visible .nav-links-dropdown {
-  display: block;
-  
+.nav-links-container.visible .nav-links-dropdown{
+  display: block; 
 }
 
 .menu-button span:nth-child(1) {
@@ -207,22 +212,29 @@ h6 {
 .menu-button span {
   display: block;
   position: absolute;
-  height: 5px;
+  height: 4px;
   width: 100%;
   background: #105aef;
-  border-radius: 3px;
+  border-radius: 30px;
   opacity: 1;
-  transform: rotate(0deg);
-  transition: 0.25s ease-in-out;
-  color: greenyellow; /* Note: This color property may not be necessary */
 }
 
 .menu-button:hover span,
 .menu-button:active span {
   background: greenyellow;
+  display: block;
 }
 
 .menu-button span a:active,
 .menu-button span a:hover {
   color: greenyellow;
+  display: block;
+  display: block;
+  position: absolute;
+  height: 4px;
+  width: 100%;
+  background: #105aef;
+  border-radius: 30px;
+  opacity: 1;
 }
+

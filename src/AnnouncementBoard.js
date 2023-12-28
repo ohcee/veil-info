@@ -12,8 +12,8 @@ const AnnouncementBoard = () => {
         <li><h2><a href="https://github.com/Veil-Project/veil/releases/tag/v1.4.1.0" target="_blank" rel="noopener noreferrer">1.4.1.0 Wallet Update</a></h2></li>  
         <li><h2><a href="https://www.youtube.com/live/txYpCLQRL1k?feature=share" target="_blank" rel="noopener noreferrer" >MYB Veil Interview 2023</a></h2></li>
         <li><h2><a href="https://veil-project.com/blog/" target="_blank" rel="noopener noreferrer">Veil-project blog</a></h2></li>
-      </ul>    
-      <h3>Veil-Projects Budget Info</h3>
+      </ul> 
+      <br></br>  
       <AddressBalance label="Project" address="38J8RGLetRUNEXycBMPg8oZqLt4bB9hCbt" />
       <AddressBalance label="Foundation" address="35uS99ZnfaYB293sJ8ptUEXkUTQXH8WnDe" /> 
     </div>
