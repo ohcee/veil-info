@@ -2,7 +2,7 @@ import React from 'react';
 
 const ThemeSlider = ({ themeMode, toggleTheme }) => (
   <div className="theme-slider">
-    <label style={{ color: '#80fcfd' }}>
+    <label style={{ color: '#3890c8' }}>
         Light Mode
     </label>
     <label>    

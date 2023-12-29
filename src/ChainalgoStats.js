@@ -35,7 +35,7 @@ function ChainalgoStats() {
       { title: 'PoS', value: chainalgoStats.pos/total*100, color: '#3890c8' },
       { title: 'ProgPow', value: chainalgoStats.progpow/total*100, color: '#105aef' },
       { title: 'RandomX', value: chainalgoStats.randomx/total*100, color: '#4273b9' },
-      { title: 'SHA256d', value: chainalgoStats.sha256d/total*100, color: '#80fcfd' },
+      { title: 'SHA256d', value: chainalgoStats.sha256d/total*100, color: '#1034a6' },
     ];
   
     return (

@@ -239,37 +239,33 @@ h6 {
 }
 
 .dark {
-  /* Dark mode styles */
   background-color: #1a1a1a;
   color: #ddd;
 }
 
 .light {
-  /* Light mode styles */
   background-color: #ffffff;
   color: #0d124d;
   
 }
 
 .theme-slider {
-  /* Style for the theme slider */
   color: #105aef;
   display: flex;
   align-items: center;
   font-size: large;
-  overflow: hidden;
-  background-color: #222021;
+  overflow: auto;
 }
 
 .theme-slider label {
-  /* Style for the theme slider label */
+  
   margin-right: 10px;
   overflow: hidden;
 }
 
 .theme-slider input {
-  width: 35px; /* Adjust the width as needed */;
-  height: 10px; /* Adjust the height as needed */;
+  width: 25px; 
+  height: 10px; 
 }
 
 /* Light mode styles */
@@ -277,12 +273,13 @@ h6 {
 .light h2,
 .light h3,
 .light h4,
-.light h5{
-  color: #4273b9; /* Adjust the color as needed */
+.light h5,
+.light h6{
+  color: #4273b9; 
 }
 
 .light .menu-button span {
-  background: #4273b9; /* Adjust the background color as needed */
+  background: #3890c8; 
   height: 4px;
   width: 100%;
   border-radius: 30px;
@@ -290,25 +287,45 @@ h6 {
 }
 
 .light .menu-button:hover span{
-  background: darkblue; /* Adjust the background color as needed */
-
+  background: darkblue; 
 }
 
 .light .header, 
 .light .footer,
 .light footer {
-  background-color: #ddd ; /* Adjust the background color as needed */
+  background-color: #ddd ; 
 }
 
 .light li,
 .light ol,
 .light .column,
 .light .row {
-  color: #ddd; /* Adjust the color as needed */
-  background-color: #ddd; /* Adjust the background color as needed */
+  color: #3890c8; 
+  background-color: #ddd; 
+}
+
+.light .nav-links-dropdown {
+  background-color: #ddd; 
 }
 
 .light .nav-links-dropdown a {
-  color: #4273b9; /* Adjust the color as needed */
-  background-color: antiquewhite;
+  color: #3890c8; 
+  background-color: #ddd; 
+}
+
+.light .nav-link-dropdown a:hover {
+  color: #1a1a1a;
+  display: block;
+  position: absolute;
+  background-color: #ddd;
+  top: 8%;
+  left: 93%;
+  min-width: 100px;
+  max-width: 100px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  z-index: 1; 
+}
+
+.light a:hover {
+  color: silver;
 }
