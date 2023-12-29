@@ -1,9 +1,9 @@
 # Veil-Info
 
 
-<p>This is a Easy to use Veil-Info app. It gathers much of the Veil blockchain data. </p>
-<p>It displays current block, difficulty, exchange rate, many clickable quick links.</p>
-<p>This uses a proxy to make calls to the Veil explorer and displays the information.</p>
+<p>This is a Easy to use Veil-Info app. It gathers blockchain, market, and Veil news. </p>
+<p>It displays current block, difficulty of all algos, exchange rate, lists the most active exchanges, team budgets, and many clickable quick links.</p>
+<p>This uses a proxy to make calls to the Veil explorer every 15 seconds and displays the information.</p>
 
 ### You will need NodeJS and NPM.
 
