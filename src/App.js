@@ -14,6 +14,7 @@ import SuperBlock from "./SuperBlock";
 import AnnouncementBoard from "./AnnouncementBoard";
 import HeaderTwo from "./HeaderTwo";
 import ThemeSlider from './ThemeSlider';
+import BackToTopButton from './BackToTopButton';
 
 function App() {
   const [isNavVisible, setNavVisibility] = useState(false);
@@ -106,6 +107,7 @@ function App() {
           <AnnouncementBoard />
           </div>  
         </div>
+        <BackToTopButton />
       </div> 
           <footer>
             <div className="footer">

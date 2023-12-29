@@ -116,7 +116,7 @@
         display: none;
         position: absolute;
         background-color: black;
-        background-size: auto;
+        background-size: contain;
         top:8%;
         left: 72%;
         min-width: 50px;

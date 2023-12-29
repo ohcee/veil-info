@@ -1,0 +1,13 @@
+.back-to-top-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  font-size: 24px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.back-to-top-button.visible {
+  opacity: 1;
+}

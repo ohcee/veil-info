@@ -310,7 +310,8 @@ h6 {
 
 .light .nav-links-dropdown a {
   color: #3890c8; 
-  background-color: #ddd; 
+  background-color: #ddd;
+  text-align: center;
 }
 
 .light .nav-link-dropdown a:hover {
