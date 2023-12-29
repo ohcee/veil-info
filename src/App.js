@@ -13,22 +13,30 @@ import ChainalgoStats from "./ChainalgoStats";
 import SuperBlock from "./SuperBlock";
 import AnnouncementBoard from "./AnnouncementBoard";
 import HeaderTwo from "./HeaderTwo";
+import ThemeSlider from './ThemeSlider';
 
 function App() {
   const [isNavVisible, setNavVisibility] = useState(false);
+  const [themeMode, setThemeMode] = useState('light');
+
 
   const toggleNavVisibility = () => {
     setNavVisibility(!isNavVisible); 
   };
 
+  const toggleTheme = () => {
+    setThemeMode(themeMode === 'light' ? 'dark' : 'light');
+  };
+
   return (
-    <div className="App">
+    <div className={`App ${themeMode}`}>
      <header className="header">
       <a href="https://github.com/Veil-Project/veil" target="_blank" rel="noopener noreferrer">
       <img src={Veil_Black} alt="Black Veil logo" />
       </a>
       <h1>Veil-Info</h1>
      <BestBlockHash />
+     <ThemeSlider themeMode={themeMode} toggleTheme={toggleTheme} />
      <nav>
      <div className="menu-button" onClick={toggleNavVisibility}>
         <span></span>
@@ -99,7 +107,6 @@ function App() {
           </div>  
         </div>
       </div> 
-        <div className="box">
           <footer>
             <div className="footer">
               <h5><b><i>DONATION ADDRESS:</i></b> <a href="https://explorer.veil-project.com/address/sv1qqpsvpq4kf0tmafn7rnvd0u4sgqm4h8ruv2c39h4vlvjp4dkk940p0qpqf98hhfj6w7667r0aeyedvrdsgzm4tjxxm4uaztgzd33h93v79w7wqqqusdz60" target="_blank" rel="noopener noreferrer">sv1qqpsvpq4kf0tmafn7rnvd0u4sgqm4h8ruv2c39h4vlvjp4dkk940p0qpqf98hhfj6w7667r0aeyedvrdsgzm4tjxxm4uaztgzd33h93v79w7wqqqusdz60</a><br></br>
@@ -107,7 +114,6 @@ function App() {
                 {new Date().getFullYear()}</h5> 
             </div>
           </footer>
-        </div>
       </div>
     
   );

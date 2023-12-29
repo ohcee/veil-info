@@ -52,7 +52,7 @@ table {
   width: auto;
   color: lightslategray;
   font-weight: bold;
-  background-color: black; 
+  background-color: offwhite;; 
 }
 
 td {
@@ -238,3 +238,77 @@ h6 {
   opacity: 1;
 }
 
+.dark {
+  /* Dark mode styles */
+  background-color: #1a1a1a;
+  color: #ddd;
+}
+
+.light {
+  /* Light mode styles */
+  background-color: #ffffff;
+  color: #0d124d;
+  
+}
+
+.theme-slider {
+  /* Style for the theme slider */
+  color: #105aef;
+  display: flex;
+  align-items: center;
+  font-size: large;
+  overflow: hidden;
+  background-color: #222021;
+}
+
+.theme-slider label {
+  /* Style for the theme slider label */
+  margin-right: 10px;
+  overflow: hidden;
+}
+
+.theme-slider input {
+  width: 35px; /* Adjust the width as needed */;
+  height: 10px; /* Adjust the height as needed */;
+}
+
+/* Light mode styles */
+.light h1,
+.light h2,
+.light h3,
+.light h4,
+.light h5{
+  color: #4273b9; /* Adjust the color as needed */
+}
+
+.light .menu-button span {
+  background: #4273b9; /* Adjust the background color as needed */
+  height: 4px;
+  width: 100%;
+  border-radius: 30px;
+  opacity: 1;
+}
+
+.light .menu-button:hover span{
+  background: darkblue; /* Adjust the background color as needed */
+
+}
+
+.light .header, 
+.light .footer,
+.light footer {
+  background-color: #ddd ; /* Adjust the background color as needed */
+}
+
+.light li,
+.light ol,
+.light .column,
+.light .row {
+  color: #ddd; /* Adjust the color as needed */
+  background-color: #ddd; /* Adjust the background color as needed */
+}
+
+.light .nav-links-dropdown a {
+  color: #4273b9; /* Adjust the color as needed */
+  background-color: antiquewhite;
+}

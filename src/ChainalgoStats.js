@@ -59,7 +59,7 @@ function ChainalgoStats() {
               <td className='table-cell'>{chainalgoStats.randomx} / 144</td>
             </tr>
             <tr className='table-row'>  
-              <td className='table-cell' style={{ color: '#80fcfd' }}>(SHA256d)</td>
+              <td className='table-cell' style={{ color: '#1034a6' }}>(SHA256d)</td>
               <td>5% daily blocks</td>
               <td className='table-cell'>{chainalgoStats.sha256d}<span> / 72</span></td>
             </tr>

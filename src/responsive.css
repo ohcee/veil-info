@@ -207,6 +207,13 @@
         color: greenyellow;
       }
 
+      .theme-slider {
+        display: none;
+        overflow: hidden;
+      }
+
                         
-              }
+    }
+
+      
             

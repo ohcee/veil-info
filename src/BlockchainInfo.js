@@ -65,7 +65,7 @@ function BlockchainInfo() {
               <td className='table-cell'>{getblockchaininfo.difficulty_randomx}</td>
             </tr>
             <tr className='table-row'>
-              <td className='table-cell' style={{ color: '#80fcfd' }}>(Sha256D) Difficulty</td>
+              <td className='table-cell' style={{ color: '#1034a6' }}>(Sha256D) Difficulty</td>
               <td className='table-cell'>{getblockchaininfo.difficulty_sha256d}</td>
             </tr> 
           </tbody>
