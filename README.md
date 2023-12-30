@@ -34,3 +34,7 @@
 ## Once inside the src folder: 
 
 #### `npm start`
+
+![Screenshot 2023-12-30 at 5 55 35 AM](https://github.com/ohcee/veil-info/assets/46406370/4a5706ae-3f00-41de-944a-8d433a675963)
+![Screenshot 2023-12-30 at 5 56 34 AM](https://github.com/ohcee/veil-info/assets/46406370/f1ef496f-2caf-428a-90e2-db3799f7c100)
+
