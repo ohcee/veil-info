@@ -18,7 +18,7 @@ import BackToTopButton from './BackToTopButton';
 
 function App() {
   const [isNavVisible, setNavVisibility] = useState(false);
-  const [themeMode, setThemeMode] = useState('light');
+  const [themeMode, setThemeMode] = useState('dark');
 
 
   const toggleNavVisibility = () => {
