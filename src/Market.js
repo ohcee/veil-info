@@ -65,9 +65,9 @@ const VeilMarketData = () => {
       <h5><a href="https://tradeogre.com/exchange/BTC-VEIL" target="_blank" rel="noopener noreferrer">Tradeogre VEIL-BTC</a> </h5>
       <h5><a href="https://www.probit.com/app/exchange/VEIL-USDT" target="_blank" rel="noopener noreferrer">Probit VEIL-USDT</a> </h5>
       <h5><a href="https://www.probit.com/app/exchange/VEIL-BTC" target="_blank" rel="noopener noreferrer">Probit VEIL-BTC</a> </h5>
-      <h5><a href="https://nonkyc.io/market/VEIL_XMR" target="_blank" rel="noopener noreferrer">Nokyc VEIL-XMR</a> </h5>
-      <h5><a href="https://nonkyc.io/market/VEIL_USDT" target="_blank" rel="noopener noreferrer">Nokyc VEIL-USDT</a> </h5>
-      <h5><a href="https://nonkyc.io/market/VEIL_BTC" target="_blank" rel="noopener noreferrer">Nokyc VEIL-BTC</a> </h5>
+      <h5><a href="https://nonkyc.io/market/VEIL_XMR" target="_blank" rel="noopener noreferrer">Nonkyc VEIL-XMR</a> </h5>
+      <h5><a href="https://nonkyc.io/market/VEIL_USDT" target="_blank" rel="noopener noreferrer">Nonkyc VEIL-USDT</a> </h5>
+      <h5><a href="https://nonkyc.io/market/VEIL_BTC" target="_blank" rel="noopener noreferrer">Nonkyc VEIL-BTC</a> </h5>
     </div>
   );
 }; 
