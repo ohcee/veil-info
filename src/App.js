@@ -111,8 +111,8 @@ function App() {
       </div> 
           <footer>
             <div className="footer">
-              <h5><b><i>DONATION ADDRESS:</i></b> <a href="https://explorer.veil-project.com/address/sv1qqpsvpq4kf0tmafn7rnvd0u4sgqm4h8ruv2c39h4vlvjp4dkk940p0qpqf98hhfj6w7667r0aeyedvrdsgzm4tjxxm4uaztgzd33h93v79w7wqqqusdz60" target="_blank" rel="noopener noreferrer">sv1qqpsvpq4kf0tmafn7rnvd0u4sgqm4h8ruv2c39h4vlvjp4dkk940p0qpqf98hhfj6w7667r0aeyedvrdsgzm4tjxxm4uaztgzd33h93v79w7wqqqusdz60</a><br></br>
-                Made with love and probably mistakes by <a href="https://twitter.com/veilminer007" target="__blank" rel="noopener noreferrer">@VEILMINER</a>{' '}
+              <h5><b><i>DONATION ADDRESS:</i></b> <a href="https://explorer.veil-project.com/main/address/sv1qqpsvpq4kf0tmafn7rnvd0u4sgqm4h8ruv2c39h4vlvjp4dkk940p0qpqf98hhfj6w7667r0aeyedvrdsgzm4tjxxm4uaztgzd33h93v79w7wqqqusdz60" target="_blank" rel="noopener noreferrer">sv1qqpsvpq4kf0tmafn7rnvd0u4sgqm4h8ruv2c39h4vlvjp4dkk940p0qpqf98hhfj6w7667r0aeyedvrdsgzm4tjxxm4uaztgzd33h93v79w7wqqqusdz60</a><br></br>
+                Made with love by <a href="https://twitter.com/veilminer007" target="__blank" rel="noopener noreferrer">@VEILMINER</a>{' '}
                 {new Date().getFullYear()}</h5> 
             </div>
           </footer>
