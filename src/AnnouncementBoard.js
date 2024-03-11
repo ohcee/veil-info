@@ -7,7 +7,7 @@ const AnnouncementBoard = () => {
     <div>
       <h3>Announcement Board</h3>
       <ul>
-        <li><h2><a href="https://medium.com/veil-project/veils-ongoing-momentum-discover-latest-updates-and-daily-rewards-3f0e7c409956" target="_blank" rel="noopener noreferrer">Latest Veil Article</a></h2></li>
+        <li><h2><a href="https://medium.com/veil-project/navigating-veil-staking-your-path-to-secure-transactions-and-passive-rewards-f69b534a224c" target="_blank" rel="noopener noreferrer">Latest Veil Article</a></h2></li>
         <li><h2><a href="https://github.com/steel97/veil_wallet" target="_blank" rel="noopener noreferrer">Veil Light Wallets</a></h2></li>
         <li><h2><a href="https://twitter.com/nonkyc_exchange/status/1701205213036655060" target="_blank" rel="noopener noreferrer">NONKYC listing</a></h2></li>
         <li><h2><a href="https://github.com/Veil-Project/veil/releases/tag/v1.4.1.0" target="_blank" rel="noopener noreferrer">1.4.1.0 Wallet Update</a></h2></li>  
