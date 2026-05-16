@@ -83,10 +83,11 @@ function BlockchainInfo() {
       <div className="border-bottom" />
       <h3>Mining Software</h3>
       <ul>
-        <li><h2><a href="https://github.com/trexminer/T-Rex" target="_blank" rel="noopener noreferrer">T-Rex Miner (Nvidia)</a></h2></li>
-        <li><h2><a href="https://github.com/andru-kun/wildrig-multi" target="_blank" rel="noopener noreferrer">Wildrig (AMD & Nvidia)</a></h2></li>
-        <li><h2><a href="https://github.com/TrailingStop/TT-Miner-release" target="_blank" rel="noopener noreferrer">TT-Miner (Nvidia)</a></h2></li>
-        <li><h2><a href="https://github.com/us77ipis/xmrig-veil" target="_blank" rel="noopener noreferrer">XMRig (CPU)</a></h2></li>
+        <li><h2><a href="https://github.com/trexminer/T-Rex" target="_blank" rel="noopener noreferrer">T-Rex Miner (Nvidia · ProgPow)</a></h2></li>
+        <li><h2><a href="https://github.com/andru-kun/wildrig-multi/releases/tag/0.40.6" target="_blank" rel="noopener noreferrer">Wildrig 0.40.6 (AMD & Nvidia · ProgPow)</a></h2></li>
+        <li><h2><a href="https://github.com/TrailingStop/TT-Miner-release" target="_blank" rel="noopener noreferrer">TT-Miner (Nvidia · ProgPow)</a></h2></li>
+        <li><h2><a href="https://github.com/ohcee/xmrig-veil" target="_blank" rel="noopener noreferrer">XMRig — ohcee fork (CPU · RandomX)</a></h2></li>
+        <li><h2><a href="https://github.com/Rakni1988/cpuminer-opt-veil" target="_blank" rel="noopener noreferrer">cpuminer-opt-veil (CPU · SHA256d)</a></h2></li>
         <li><h2><a href="https://github.com/us77ipis/veil-node-stratum-proxy" target="_blank" rel="noopener noreferrer">Solo Mining Proxy</a></h2></li>
       </ul>
 
