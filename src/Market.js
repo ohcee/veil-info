@@ -1,76 +1,105 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { NONKYC_USDT, NONKYC_BTC, NONKYC_XMR } from "./config";
 
 const VeilMarketData = () => {
-  const [marketData, setMarketData] = useState(null);
+  const [usdtData, setUsdtData] = useState(null);
+  const [btcData, setBtcData] = useState(null);
+  const [xmrData, setXmrData] = useState(null);
+  const [flash, setFlash] = useState(false);
+  const prevPrice = useRef(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch(
-        "https://api.coingecko.com/api/v3/coins/veil?localization=false&tickers=false&market_data=true&community_data=false&developer_data=false&sparkline=false"
-      );
-      const data = await response.json();
-      setMarketData(data.market_data);
+    const fetchAll = async () => {
+      try {
+        const [usdtRes, btcRes, xmrRes] = await Promise.all([
+          fetch(NONKYC_USDT),
+          fetch(NONKYC_BTC),
+          fetch(NONKYC_XMR),
+        ]);
+        const [usdt, btc, xmr] = await Promise.all([
+          usdtRes.json(),
+          btcRes.json(),
+          xmrRes.json(),
+        ]);
+        const newPrice = parseFloat(usdt.lastPrice || 0);
+        if (prevPrice.current !== null && prevPrice.current !== newPrice) {
+          setFlash(true);
+          setTimeout(() => setFlash(false), 800);
+        }
+        prevPrice.current = newPrice;
+        setUsdtData(usdt);
+        setBtcData(btc);
+        setXmrData(xmr);
+      } catch (err) { console.error(err); }
     };
-    fetchData();
-    fetchData(); // Initial fetch
-    const intervalId = setInterval(fetchData, 60000); // Fetch every minute
-
-    return () => clearInterval(intervalId); // Clean up the interval when the component unmounts
+    fetchAll();
+    const intervalId = setInterval(fetchAll, 30000);
+    return () => clearInterval(intervalId);
   }, []);
 
+  if (!usdtData) return <div>Loading market data...</div>;
+
+  const price = parseFloat(usdtData?.lastPrice || 0);
+  const volumeVeil = parseFloat(usdtData?.volume || 0);
+  // Volume from NonKYC is in base asset (VEIL) — convert to USD
+  const volumeUSD = volumeVeil * price;
+  const change = parseFloat(usdtData?.priceChangePercent || 0);
+
   return (
-    <div>
-      <h3>Market Data</h3> 
+    <div className={flash ? "flash-green" : ""}>
+      <h3>Market Data</h3>
       <table>
         <tbody>
           <tr className="table-row">
-            <td className="table-cell">Current Price (USD):</td>
-            <td className="table-cell">${marketData?.current_price?.usd && marketData.current_price.usd.toFixed(8)}</td>
+            <td className="table-cell">Price USDT</td>
+            <td style={{color:"#00ff88", fontWeight:"700"}}>
+              ${price.toFixed(6)}
+            </td>
           </tr>
           <tr className="table-row">
-    <td className="table-cell">Market Cap (USD):</td>
-    <td className="table-cell">
-        {marketData?.market_cap?.usd &&
-            marketData.market_cap.usd.toLocaleString("en-US", {
-                style: "currency",
-                currency: "USD"
-            })}
-    </td>
-</tr>
-
-          <tr className="table-row">
-            <td className="table-cell">Total Volume (USD):</td>
-            <td className="table-cell">${marketData?.total_volume?.usd && marketData.total_volume.usd.toFixed(2)}</td>
-          </tr> 
-          <tr className="table-row">
-            <td className="table-cell">Total Volume (BTC):</td>
-            <td className="table-cell">{marketData?.total_volume?.btc && marketData.total_volume.btc.toFixed(8)}</td>
+            <td className="table-cell">Price BTC</td>
+            <td>{parseFloat(btcData?.lastPrice || 0).toFixed(8)}</td>
           </tr>
           <tr className="table-row">
-            <td className="table-cell">24h High (USD):</td>
-            <td className="table-cell">${marketData?.high_24h?.usd && marketData.high_24h.usd.toFixed(6)}</td>
+            <td className="table-cell">Price XMR</td>
+            <td>{parseFloat(xmrData?.lastPrice || 0).toFixed(8)}</td>
           </tr>
           <tr className="table-row">
-            <td className="table-cell">24h Low (USD):</td>
-            <td className="table-cell">${marketData?.low_24h?.usd && marketData.low_24h.usd.toFixed(6)}</td>
+            <td className="table-cell">24h Vol (VEIL)</td>
+            <td>{volumeVeil.toLocaleString(undefined,{maximumFractionDigits:0})}</td>
           </tr>
           <tr className="table-row">
-            <td className="table-cell">Current Supply: </td>
-            <td className="table-cell">{marketData?.total_supply && marketData.total_supply.toFixed(0)} /300000000</td>
-          </tr> 
+            <td className="table-cell">24h Vol (USD)</td>
+            <td>${volumeUSD.toLocaleString(undefined,{maximumFractionDigits:2})}</td>
+          </tr>
+          <tr className="table-row">
+            <td className="table-cell">24h High</td>
+            <td>${parseFloat(usdtData?.highPrice || 0).toFixed(6)}</td>
+          </tr>
+          <tr className="table-row">
+            <td className="table-cell">24h Low</td>
+            <td>${parseFloat(usdtData?.lowPrice || 0).toFixed(6)}</td>
+          </tr>
+          <tr className="table-row">
+            <td className="table-cell">24h Change</td>
+            <td style={{color: change >= 0 ? "#00ff88" : "#ff4d6d", fontWeight:"700"}}>
+              {change >= 0 ? "▲" : "▼"} {Math.abs(change).toFixed(2)}%
+            </td>
+          </tr>
         </tbody>
       </table>
-      <h6>Data from <a href="https://www.coingecko.com/" target="_blank" rel="noopener noreferrer">CoinGecko</a></h6>
-      <h3>Exchanges</h3>
-      <h5><a href="https://tradeogre.com/exchange/BTC-VEIL" target="_blank" rel="noopener noreferrer">Tradeogre VEIL-BTC</a> </h5>
-      <h5><a href="https://www.probit.com/app/exchange/VEIL-USDT" target="_blank" rel="noopener noreferrer">Probit VEIL-USDT</a> </h5>
-      <h5><a href="https://www.probit.com/app/exchange/VEIL-BTC" target="_blank" rel="noopener noreferrer">Probit VEIL-BTC</a> </h5>
-      <h5><a href="https://nonkyc.io/market/VEIL_XMR" target="_blank" rel="noopener noreferrer">Nonkyc VEIL-XMR</a> </h5>
-      <h5><a href="https://nonkyc.io/market/VEIL_USDT" target="_blank" rel="noopener noreferrer">Nonkyc VEIL-USDT</a> </h5>
-      <h5><a href="https://nonkyc.io/market/VEIL_BTC" target="_blank" rel="noopener noreferrer">Nonkyc VEIL-BTC</a> </h5>
+      <h6>Live · <a href="https://nonkyc.io" target="_blank" rel="noopener noreferrer">NonKYC</a></h6>
+
+      <div className="border-bottom" />
+
+      <h3 style={{marginTop:'14px'}}>Exchanges</h3>
+      <ul>
+        <li><h2><a href="https://nonkyc.io/market/VEIL_USDT" target="_blank" rel="noopener noreferrer">NonKYC · VEIL-USDT</a></h2></li>
+        <li><h2><a href="https://nonkyc.io/market/VEIL_BTC" target="_blank" rel="noopener noreferrer">NonKYC · VEIL-BTC</a></h2></li>
+        <li><h2><a href="https://nonkyc.io/market/VEIL_XMR" target="_blank" rel="noopener noreferrer">NonKYC · VEIL-XMR</a></h2></li>
+      </ul>
     </div>
   );
-}; 
+};
 
 export default VeilMarketData;
-

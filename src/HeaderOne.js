@@ -1,39 +1,42 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from "react";
+import { NONKYC_USDT } from "./config";
 
-function HeaderOne() {
-  const [veilPrice, setVeilPrice] = useState(NaN);
+const HeaderOne = () => {
+  const [veilPrice, setVeilPrice] = useState(null);
+  const [flash, setFlash] = useState(false);
+  const prevPrice = useRef(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://localhost:3001/probit/ticker?market_ids=VEIL-USDT&random=${Math.random()}`, {
-          method: 'GET',
-          headers: { accept: 'application/json' },
-        });
-
-
-        if (!response.ok) {
-          throw new Error('API request failed');
-        }
-
+        const response = await fetch(NONKYC_USDT);
+        if (!response.ok) throw new Error("failed");
         const data = await response.json();
-        const usdtPrice = Number(data.data[0].last);
-        setVeilPrice(usdtPrice);
-      } catch (error) {
-        console.log(error);
-      }
+        const price = parseFloat(data?.lastPrice || 0);
+        if (prevPrice.current !== null && prevPrice.current !== price) {
+          setFlash(true);
+          setTimeout(() => setFlash(false), 800);
+        }
+        prevPrice.current = price;
+        setVeilPrice(price);
+      } catch (err) { console.error(err); }
     };
-
     fetchData();
-    const intervalId = setInterval(fetchData, 300000); // 5 minutes
-
+    const intervalId = setInterval(fetchData, 30000);
     return () => clearInterval(intervalId);
   }, []);
 
-return (
-  <h3>VEIL USDT Probit Price <p>${isNaN(veilPrice) ? 'Loading...' : veilPrice.toFixed(6)} USDT</p></h3>
-);
-
-}
+  return (
+    <div style={{textAlign:'center', marginBottom:'8px'}}>
+      <h3>VEIL / USDT</h3>
+      <p style={{
+        color: flash ? '#00ff88' : undefined,
+        transition: 'color 0.3s',
+        fontSize: '1.4rem'
+      }}>
+        {veilPrice === null ? "—" : `$${veilPrice.toFixed(6)}`}
+      </p>
+    </div>
+  );
+};
 export default HeaderOne;
-

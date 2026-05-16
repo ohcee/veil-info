@@ -1,34 +1,37 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useState, useEffect, useRef } from "react";
+import { EXPLORER_API } from "./config";
 
 const BestBlockHash = () => {
-  const [blockchainInfo, setBlockchainInfo] = useState(null);
+  const [hash, setHash] = useState(null);
+  const [flash, setFlash] = useState(false);
+  const prev = useRef(null);
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await axios(
-        'http://localhost:3001/api/GetBlockchainInfo/',
-      );
-      console.log(result.data)
-      setBlockchainInfo({ bestblockhash: result.data.bestblockhash });
+      try {
+        const response = await fetch(`${EXPLORER_API}/api/GetBlockchainInfo`);
+        if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
+        const data = await response.json();
+        if (prev.current !== null && prev.current !== data.bestblockhash) {
+          setFlash(true);
+          setTimeout(() => setFlash(false), 1000);
+        }
+        prev.current = data.bestblockhash;
+        setHash(data.bestblockhash);
+      } catch (err) { console.error(err); }
     };
-
-    fetchData(); // Initial fetch
-    const intervalId = setInterval(fetchData, 15000); // Fetch every 15 seconds
-
-    return () => clearInterval(intervalId); // Clean up the interval when the component unmounts
+    fetchData();
+    const intervalId = setInterval(fetchData, 15000);
+    return () => clearInterval(intervalId);
   }, []);
 
   return (
-    <div className="BestBlockHash">
-      {blockchainInfo && (
-        <h3> 
-          Best Block Hash: <br></br>{blockchainInfo.bestblockhash}
-        </h3>
-      )}
+    <div className={`BestBlockHash ${flash ? 'flash-blue' : ''}`}>
+      <div className="bbh-label">BEST BLOCK HASH</div>
+      <div className="bbh-value">{hash ?? "loading..."}</div>
+      <div className="bbh-hint">Use this hash to verify your node is synced with the network</div>
     </div>
   );
-}; 
+};
 
 export default BestBlockHash;
-

@@ -1,38 +1,42 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect, useRef } from "react";
+import { NONKYC_BTC } from "./config";
 
-function HeaderThree() {
+const HeaderThree = () => {
   const [veilPrice, setVeilPrice] = useState(null);
+  const [flash, setFlash] = useState(false);
+  const prevPrice = useRef(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/tradeogre/ticker/VEIL-BTC');
-    
-        if (!response.data.success) {
-          throw new Error('API request failed');
+        const response = await fetch(NONKYC_BTC);
+        if (!response.ok) throw new Error("failed");
+        const data = await response.json();
+        const price = parseFloat(data?.lastPrice || 0);
+        if (prevPrice.current !== null && prevPrice.current !== price) {
+          setFlash(true);
+          setTimeout(() => setFlash(false), 800);
         }
-    
-        const veilPriceString = response.data.price;
-        
-        if (veilPriceString) {
-          const veilPriceNumber = JSON.parse(veilPriceString);
-          setVeilPrice(veilPriceNumber);
-        }
-      } catch (error) {
-        console.log(error);
-      }
+        prevPrice.current = price;
+        setVeilPrice(price);
+      } catch (err) { console.error(err); }
     };
-
     fetchData();
-    const intervalId = setInterval(fetchData, 120000); // 2 minutes
-
+    const intervalId = setInterval(fetchData, 30000);
     return () => clearInterval(intervalId);
   }, []);
 
   return (
-    <h3>VEIL BTC Tradeogre Price <p>{typeof veilPrice === 'number' ? veilPrice.toFixed(8) + ' BTC' : 'Loading...'}</p></h3>
+    <div style={{textAlign:'center', marginBottom:'8px'}}>
+      <h3>VEIL / BTC</h3>
+      <p style={{
+        color: flash ? '#00ff88' : undefined,
+        transition: 'color 0.3s',
+        fontSize: '1.1rem'
+      }}>
+        {veilPrice === null ? "—" : `${veilPrice.toFixed(8)} BTC`}
+      </p>
+    </div>
   );
-}
-
+};
 export default HeaderThree;

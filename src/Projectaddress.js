@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import { PROXY } from "./config";
 
 const AddressBalance = ({ label, address }) => {
   const [balance, setBalance] = useState(null);
@@ -7,43 +7,31 @@ const AddressBalance = ({ label, address }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const result = await axios.get(
-          `http://localhost:3001/api/GetAddressBalance/${address}`,
-          {
-            headers: {
-              'accept': 'application/json',
-            }
-          }
-        );
-        console.log(`${label} Data received:`, result.data);
-
-        // Check if the received data is a number
-        if (typeof result.data === 'number') {
-          setBalance(result.data);
+        const response = await fetch(`${PROXY}/address/${address}`, {
+          headers: { accept: "application/json" },
+        });
+        if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
+        const data = await response.json();
+        if (typeof data === "number") {
+          setBalance(data);
         } else {
-          console.error(`Invalid data structure for ${label}:`, result.data);
+          console.error(`Invalid data for ${label}:`, data);
         }
-      } catch (error) {
-        console.error(`Error fetching data for ${label}:`, error);
+      } catch (err) {
+        console.error(`Error fetching balance for ${label}:`, err);
       }
     };
-
-    fetchData(); // Initial fetch
-    const intervalId = setInterval(fetchData, 86400000); // Fetch once a day?
-
-    return () => clearInterval(intervalId); // Clean up the interval when the component unmounts
+    fetchData();
+    const intervalId = setInterval(fetchData, 86400000); // once a day
+    return () => clearInterval(intervalId);
   }, [address, label]);
 
   return (
     <div className="AddressBalance">
       {balance !== null ? (
         <div>
-          <h3>
-            {label} Budget:{" "}
-          </h3> 
-          <h4>
-            <span style={{ color: "lightslategrey" }}>{balance} VEIL</span>
-          </h4>
+          <h3>{label} Budget:</h3>
+          <h4><span style={{ color: "lightslategrey" }}>{balance} VEIL</span></h4>
         </div>
       ) : (
         <h5>Loading {label} Budget...</h5>
@@ -51,5 +39,4 @@ const AddressBalance = ({ label, address }) => {
     </div>
   );
 };
-
 export default AddressBalance;

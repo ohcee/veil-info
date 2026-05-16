@@ -1,89 +1,137 @@
-import React, { useState, useEffect } from 'react';
-import axios from "axios";
-import { PieChart } from 'react-minimal-pie-chart';
+import React, { useState, useEffect, useRef } from "react";
+import { PieChart } from "react-minimal-pie-chart";
+import { EXPLORER_API } from "./config";
+
+const COLORS = {
+  pos:     "#38bdf8",
+  progpow: "#c084fc",
+  randomx: "#00ff88",
+  sha256d: "#fb923c",
+};
 
 function ChainalgoStats() {
-  const [chainalgoStats, setChainalgoStats] = useState(null);
+  const [stats, setStats] = useState(null);
+  const [flash, setFlash] = useState(false);
   const [error, setError] = useState(null);
+  const prev = useRef(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios(
-          'http://localhost:3001/api/GetChainalgoStats',
-        );
-        setChainalgoStats(response.data);
-        setError(null); // Reset error state if successful
-      } catch (error) {
-        console.error(error);
-        setError(error); // Set error state if there's an error
-      }
+        const response = await fetch(`${EXPLORER_API}/api/GetChainalgoStats`);
+        if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
+        const data = await response.json();
+        if (prev.current !== null && prev.current !== data.pos) {
+          setFlash(true);
+          setTimeout(() => setFlash(false), 800);
+        }
+        prev.current = data.pos;
+        setStats(data);
+        setError(null);
+      } catch (err) { setError(err); }
     };
     fetchData();
-    const intervalId = setInterval(fetchData, 15000); // Fetch every 15 seconds
-
-    return () => clearInterval(intervalId); // Clean up the interval when the component unmounts
+    const intervalId = setInterval(fetchData, 15000);
+    return () => clearInterval(intervalId);
   }, []);
 
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  } else if (!chainalgoStats) {
-    return <div>Loading...</div>;
-  } else {
-    const total = chainalgoStats.pos + chainalgoStats.progpow + chainalgoStats.randomx + chainalgoStats.sha256d;
-    const data = [
-      { title: 'PoS', value: chainalgoStats.pos/total*100, color: '#3890c8' },
-      { title: 'ProgPow', value: chainalgoStats.progpow/total*100, color: '#105aef' },
-      { title: 'RandomX', value: chainalgoStats.randomx/total*100, color: '#4273b9' },
-      { title: 'SHA256d', value: chainalgoStats.sha256d/total*100, color: '#1034a6' },
-    ];
-  
-    return (
-      <div>
-        <h3>Block Split</h3>
-        <table>
-          <tbody>
-            <tr className='table-row'>
-              <td className='table-cell' style={{ color: '#3890c8' }}>(Proof-of-Stake)</td>
-              <td>50% daily blocks</td>
-              <td className='table-cell'>{chainalgoStats.pos} / 720</td>
+  if (error) return <div>Error loading block split</div>;
+  if (!stats) return <div>Loading...</div>;
+
+  const total = stats.pos + stats.progpow + stats.randomx + stats.sha256d;
+
+  const chartData = [
+    { title: "PoS",     value: (stats.pos / total) * 100,     color: COLORS.pos },
+    { title: "ProgPow", value: (stats.progpow / total) * 100, color: COLORS.progpow },
+    { title: "RandomX", value: (stats.randomx / total) * 100, color: COLORS.randomx },
+    { title: "SHA256d", value: (stats.sha256d / total) * 100, color: COLORS.sha256d },
+  ];
+
+  return (
+    <div className={flash ? "flash-green" : ""} style={{display:'flex',flexDirection:'column',height:'100%'}}>
+      <h3>Block Split · Last 24h</h3>
+
+      <table style={{marginBottom:'8px'}}>
+        <tbody>
+          {[
+            {label:"Proof-of-Stake", key:"pos",     target:720, pct:"50%"},
+            {label:"ProgPow",        key:"progpow", target:504, pct:"35%"},
+            {label:"RandomX",        key:"randomx", target:144, pct:"10%"},
+            {label:"SHA256d",        key:"sha256d", target:72,  pct:"5%"},
+          ].map(({label, key, target, pct}) => (
+            <tr key={key} className="table-row">
+              <td className="table-cell" style={{color:COLORS[key]}}>{label}</td>
+              <td style={{color:COLORS[key]}}>{pct} · {stats[key]} / {target}</td>
             </tr>
-            <tr className='table-row'>  
-              <td className='table-cell' style={{ color: '#105aef' }}>(ProgPow)</td>
-              <td>35% daily blocks</td>
-              <td className='table-cell'>{chainalgoStats.progpow} / 504</td>
-            </tr>
-            <tr className='table-row'>
-              <td className='table-cell' style={{ color: '#4273b9' }}>(RandomX)</td>
-              <td>10% daily blocks</td>
-              <td className='table-cell'>{chainalgoStats.randomx} / 144</td>
-            </tr>
-            <tr className='table-row'>  
-              <td className='table-cell' style={{ color: '#1034a6' }}>(SHA256d)</td>
-              <td>5% daily blocks</td>
-              <td className='table-cell'>{chainalgoStats.sha256d}<span> / 72</span></td>
-            </tr>
-            </tbody>
-        </table>          
-        <div className='bottom-border'>
-        <div style={{width: '255px', height: '255px', margin: '1px', padding: '12%'}}>
-        <PieChart
-          data={data}
-          lineWidth={100}
-          label={({ dataEntry }) => `${dataEntry.title}: ${dataEntry.value.toFixed(2)}%`}
-          labelStyle={{
-            fontSize: '5px',
-            fontWeight: 'bolder',
-            overflow: 'ellipsis',
-          }}
-        />
+          ))}
+        </tbody>
+      </table>
+
+      <div style={{
+        flex: 1,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        background: 'rgba(0,0,0,0.4)',
+        borderRadius: '10px',
+        border: '1px solid rgba(48,54,61,1)',
+        padding: '20px',
+        marginTop: '12px',
+        minHeight: '280px',
+      }}>
+        {/* NO labels on pie — legend below handles it */}
+        <div style={{width:'100%', maxWidth:'260px', aspectRatio:'1'}}>
+          <PieChart
+            data={chartData}
+            lineWidth={45}
+            paddingAngle={3}
+          />
         </div>
-        </div> 
-        <h4><p>Last 24 Hour Block Split</p></h4>
+
+        {/* LEGEND — 2x2 grid */}
+        <div style={{
+          display:'grid',
+          gridTemplateColumns:'1fr 1fr',
+          gap:'12px 24px',
+          marginTop:'20px',
+          width:'100%',
+          maxWidth:'280px',
+        }}>
+          {chartData.map(d => (
+            <div key={d.title} style={{display:'flex',alignItems:'center',gap:'8px'}}>
+              <div style={{
+                width:'16px',
+                height:'16px',
+                borderRadius:'4px',
+                background:d.color,
+                flexShrink:0,
+              }} />
+              <div>
+                <div style={{
+                  fontFamily:"'JetBrains Mono',monospace",
+                  fontSize:'0.85rem',
+                  color: d.color,
+                  fontWeight:'700',
+                  lineHeight:1.2,
+                }}>
+                  {d.value.toFixed(1)}%
+                </div>
+                <div style={{
+                  fontFamily:"'Inter',sans-serif",
+                  fontSize:'0.78rem',
+                  color:'#8b949e',
+                  fontWeight:'500',
+                }}>
+                  {d.title}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
-      
-    );
-  }
+    </div>
+  );
 }
 
 export default ChainalgoStats;

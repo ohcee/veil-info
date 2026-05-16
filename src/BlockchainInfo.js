@@ -1,95 +1,98 @@
-import React, { useState, useEffect } from 'react';
-import axios from "axios";
+import React, { useState, useEffect, useRef } from "react";
+import { EXPLORER_API } from "./config";
+
+const formatGB = (bytes) => {
+  if (!bytes) return "—";
+  return (bytes / (1024 * 1024 * 1024)).toFixed(2) + " GB";
+};
+
+const Arrow = ({ current, prev }) => {
+  if (prev === null || current === prev) return <span style={{color:'#8b949e'}}> —</span>;
+  if (current > prev) return <span style={{color:'#00ff88'}}> ▲</span>;
+  return <span style={{color:'#ff4d6d'}}> ▼</span>;
+};
 
 function BlockchainInfo() {
-  const [getblockchaininfo, setgetblockchaininfo] = useState(null);
+  const [info, setInfo] = useState(null);
+  const [prev, setPrev] = useState(null);
   const [error, setError] = useState(null);
-
-  const formatBytes = (bytes, decimals = 2) => {
-    if (bytes === 0) return '0 Bytes';
-    const k = 1024;
-    const dm = decimals < 0 ? 0 : decimals;
-    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
-  }
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios(
-          'http://localhost:3001/api/GetBlockchainInfo',
-        );
-        console.log(response);
-        const sizeOnDiskGb = formatBytes(response.data.size_on_disk, 2);
-        setgetblockchaininfo({
-          difficulty_randomx: response.data.difficulty_randomx,
-          difficulty_progpow: response.data.difficulty_progpow,
-          difficulty_sha256d: response.data.difficulty_sha256d,
-          difficulty_pos: response.data.difficulty_pos,
-          size_on_disk: response.data.size_on_disk,
-          size_on_disk_gb: sizeOnDiskGb
-        });
-        setError(null); // Reset error state if successful
-      } catch (error) {
-        console.error(error);
-        setError(error); // Set error state if there's an error
-      }
+        const response = await fetch(`${EXPLORER_API}/api/GetBlockchainInfo`);
+        if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
+        const data = await response.json();
+        setPrev(info);
+        setInfo(data);
+        setError(null);
+      } catch (err) { setError(err); }
     };
     fetchData();
-    const intervalId = setInterval(fetchData, 15000); // Fetch every 15 seconds
-
-    return () => clearInterval(intervalId); // Clean up the interval when the component unmounts
+    const intervalId = setInterval(fetchData, 15000);
+    return () => clearInterval(intervalId);
   }, []);
 
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  } else if (!getblockchaininfo) {
-    return <div>Loading...</div>;
-  } else {
-    return (
-      <div>
-        <h3>Difficulty Data</h3>  
-        <table>
-          <tbody>
-            <tr className='table-row'>
-              <td className='table-cell' style={{ color: '#3890c8' }}>(PoS) Difficulty</td>
-              <td className='table-cell'>{getblockchaininfo.difficulty_pos}</td>
-            </tr>
-            <tr className='table-row'>
-              <td className='table-cell' style={{ color: '#105aef' }}>(ProgPow) Difficulty</td>
-              <td className='table-cell'>{getblockchaininfo.difficulty_progpow}</td>
-            </tr>
-            <tr className='table-row'>
-              <td className='table-cell' style={{ color: '#4273b9' }}>(RandomX) Difficulty</td>
-              <td className='table-cell'>{getblockchaininfo.difficulty_randomx}</td>
-            </tr>
-            <tr className='table-row'>
-              <td className='table-cell' style={{ color: '#1034a6' }}>(Sha256D) Difficulty</td>
-              <td className='table-cell'>{getblockchaininfo.difficulty_sha256d}</td>
-            </tr> 
-          </tbody>
-        </table>
-        <div className='border-bottom'></div>
-         <h3>Mining Software</h3>
-         <ul>
-           <li><h3><a href="https://github.com/trexminer/T-Rex" target='_blank' rel="noopener noreferrer">T-Rex Miner (Nvidia)</a></h3></li>
-           <li><h3><a href="https://github.com/andru-kun/wildrig-multi" target='_blank' rel="noopener noreferrer">Wildrig-Miner (AMD & Nvida)</a></h3></li>
-           <li><h3><a href="https://github.com/TrailingStop/TT-Miner-release" target='_blank' rel="noopener noreferrer">TT-Miner (Nvidia)</a></h3></li>
-           <li><h3><a href="https://github.com/us77ipis/xmrig-veil" target='_blank' rel="noopener noreferrer">XMRIG (CPU)</a></h3></li>
-           <li><h3><a href="https://github.com/us77ipis/veil-node-stratum-proxy" target='_blank' rel="noopener noreferrer">Solo Mining Proxy</a></h3></li>
-         </ul>
-         <h3>Pools</h3>
-         <ul>
-           <li><h3><a href="https://fastpool.xyz/veil-rx/" target='_blank' rel="noopener noreferrer">Fastpool (RandomX)</a></h3></li>
-         </ul>
-       </div>
-      
-    ); 
-  }
+  if (error) return <div>Error loading blockchain info</div>;
+  if (!info) return <div>Loading...</div>;
+
+  return (
+    <div style={{display:'flex', flexDirection:'column', height:'100%'}}>
+      <h3>Difficulty</h3>
+      <table>
+        <tbody>
+          <tr className="table-row">
+            <td className="table-cell" style={{color:"#38bdf8"}}>PoS</td>
+            <td style={{color:"#38bdf8"}}>
+              {Number(info.difficulty_pos).toLocaleString(undefined,{maximumFractionDigits:0})}
+              <Arrow current={info.difficulty_pos} prev={prev?.difficulty_pos ?? null} />
+            </td>
+          </tr>
+          <tr className="table-row">
+            <td className="table-cell" style={{color:"#c084fc"}}>ProgPow</td>
+            <td style={{color:"#c084fc"}}>
+              {Number(info.difficulty_progpow).toLocaleString(undefined,{maximumFractionDigits:2})}
+              <Arrow current={info.difficulty_progpow} prev={prev?.difficulty_progpow ?? null} />
+            </td>
+          </tr>
+          <tr className="table-row">
+            <td className="table-cell" style={{color:"#00ff88"}}>RandomX</td>
+            <td style={{color:"#00ff88"}}>
+              {Number(info.difficulty_randomx).toLocaleString(undefined,{maximumFractionDigits:4})}
+              <Arrow current={info.difficulty_randomx} prev={prev?.difficulty_randomx ?? null} />
+            </td>
+          </tr>
+          <tr className="table-row">
+            <td className="table-cell" style={{color:"#fb923c"}}>SHA256d</td>
+            <td style={{color:"#fb923c"}}>
+              {Number(info.difficulty_sha256d).toLocaleString(undefined,{maximumFractionDigits:0})}
+              <Arrow current={info.difficulty_sha256d} prev={prev?.difficulty_sha256d ?? null} />
+            </td>
+          </tr>
+          <tr className="table-row">
+            <td className="table-cell">Chain Size</td>
+            <td>{formatGB(info.size_on_disk)}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div className="border-bottom" />
+      <h3>Mining Software</h3>
+      <ul>
+        <li><h2><a href="https://github.com/trexminer/T-Rex" target="_blank" rel="noopener noreferrer">T-Rex Miner (Nvidia)</a></h2></li>
+        <li><h2><a href="https://github.com/andru-kun/wildrig-multi" target="_blank" rel="noopener noreferrer">Wildrig (AMD & Nvidia)</a></h2></li>
+        <li><h2><a href="https://github.com/TrailingStop/TT-Miner-release" target="_blank" rel="noopener noreferrer">TT-Miner (Nvidia)</a></h2></li>
+        <li><h2><a href="https://github.com/us77ipis/xmrig-veil" target="_blank" rel="noopener noreferrer">XMRig (CPU)</a></h2></li>
+        <li><h2><a href="https://github.com/us77ipis/veil-node-stratum-proxy" target="_blank" rel="noopener noreferrer">Solo Mining Proxy</a></h2></li>
+      </ul>
+
+      <div className="border-bottom" />
+      <h3>Pools</h3>
+      <ul>
+        <li><h2><a href="https://fastpool.xyz/veil-rx/" target="_blank" rel="noopener noreferrer">Fastpool (RandomX)</a></h2></li>
+      </ul>
+    </div>
+  );
 }
 
 export default BlockchainInfo;
-
-              
-
