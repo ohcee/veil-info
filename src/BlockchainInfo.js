@@ -94,6 +94,7 @@ function BlockchainInfo() {
       <h3>Pools</h3>
       <ul>
         <li><h2><a href="https://fastpool.xyz/veil-rx/" target="_blank" rel="noopener noreferrer">Fastpool (RandomX)</a></h2></li>
+        <li><h2><a href="https://veil.yadaminers.pl/" target="_blank" rel="noopener noreferrer">Yada Miners (ProgPow · RandomX · SHA256d)</a></h2></li>
       </ul>
     </div>
   );
