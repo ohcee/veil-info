@@ -33,7 +33,7 @@ const VeilMarketData = () => {
       } catch (err) { console.error(err); }
     };
     fetchAll();
-    const intervalId = setInterval(fetchAll, 30000);
+    const intervalId = setInterval(fetchAll, 60000);
     return () => clearInterval(intervalId);
   }, []);
 

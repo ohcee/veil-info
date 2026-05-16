@@ -22,7 +22,7 @@ function ChainalgoStats() {
     };
 
     fetchData();
-    const intervalId = setInterval(fetchData, 15000);
+    const intervalId = setInterval(fetchData, 60000);
     return () => clearInterval(intervalId);
   }, []);
 

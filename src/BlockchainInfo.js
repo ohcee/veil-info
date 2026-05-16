@@ -32,7 +32,7 @@ function BlockchainInfo() {
       } catch (err) { setError(err); }
     };
     fetchData();
-    const intervalId = setInterval(fetchData, 15000);
+    const intervalId = setInterval(fetchData, 60000);
     return () => clearInterval(intervalId);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

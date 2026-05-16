@@ -21,7 +21,7 @@ const Currentblock = () => {
       } catch (err) { console.error(err); }
     };
     fetchData();
-    const intervalId = setInterval(fetchData, 15000);
+    const intervalId = setInterval(fetchData, 60000);
     return () => clearInterval(intervalId);
   }, []);
 
