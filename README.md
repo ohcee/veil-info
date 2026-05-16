@@ -1,6 +1,6 @@
 # Veil-Info
 
-A live dashboard for the Veil privacy blockchain — displaying real-time block data, market prices, mining stats, and network information.
+A live dashboard for the Veil privacy blockchain displaying real-time block data, market prices, mining stats, and network information.
 
 **Live at:** https://veil-info.donkeybabe123.workers.dev
 
@@ -56,4 +56,4 @@ Output directory: `build`
 
 ## Contributing
 
-PRs welcome. Built and maintained by [@VEILMINER](https://twitter.com/veilminer007).
+PRs welcome.
