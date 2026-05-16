@@ -16,6 +16,7 @@ const AnnouncementBoard = () => {
         <li><h2><a href="https://t.me/VEILProject" target="_blank" rel="noopener noreferrer">Telegram</a></h2></li>
         <li><h2><a href="https://veil-project.com/faqs/" target="_blank" rel="noopener noreferrer">FAQ</a></h2></li>
         <li><h2><a href="https://veil.freshdesk.com/support/home" target="_blank" rel="noopener noreferrer">Help Desk</a></h2></li>
+        <li><h2><a href="https://github.com/ohcee/veil-info" target="_blank" rel="noopener noreferrer">Veil-Info Source Code</a></h2></li>
       </ul>
       <br />
       {/* Budget addresses temporarily commented out pending governance/multisig fix
