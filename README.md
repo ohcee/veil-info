@@ -1,59 +1,59 @@
 # Veil-Info
 
-<p>The Veil-Info app is an easy-to-use tool that provides up-to-date information on the Veil blockchain, market trends, and news.</p>
-<p>It displays the current block, difficulty levels for all algorithms, exchange rates, the most active exchanges, team budgets, and includes many clickable quick links.</p>
-<p>This uses a proxy to make calls to the Veil explorer every 15 seconds and displays the information.</p>
+A live dashboard for the Veil privacy blockchain — displaying real-time block data, market prices, mining stats, and network information.
 
-### `git clone https://github.com/ohcee/veil-info.git`
+**Live at:** https://veil-info.donkeybabe123.workers.dev
 
-### You will need Node.js and npm.
+---
 
-### On Ubuntu:
-### `sudo apt install nodejs`
-### `sudo apt install npm`
+## Features
 
-#### On macOS:
-#### You can use Homebrew to install Node.js and npm:
-### `brew install nodejs`
+- Live prices from NonKYC (VEIL/USDT, VEIL/BTC, VEIL/XMR)
+- Real-time block data updating every 15 seconds
+- Difficulty tracking with trend arrows (▲▼) for all algorithms
+- 24-hour block split pie chart (PoS, ProgPow, RandomX, SHA256d)
+- Superblock countdown with economics info
+- Chain size, current block, block reward info
+- Mining software and pool links
+- Best block hash for node sync verification
+- Dark and light mode
 
-### After you install npm, install and upgrade
+---
 
-### `npm install`
+## Tech
 
-### `npm install ws`
+No proxy server needed. All data fetched directly via a Cloudflare Worker that handles CORS.
 
-### `npm upgrade`
+- React
+- Cloudflare Worker (CORS proxy)
+- NonKYC API (market data)
+- Veil Explorer API (chain data)
 
-### `npm install @testing-library/jest-dom@latest`
-### `npm install @testing-library/react@latest` 
-### `npm install @testing-library/user-event@latest`
-### `npm install web-vitals@latest`
+---
 
-### After these are installed, inside the `veil-info` 
-### root folder, run the following:
+## Run Locally
 
-### `cd Java` 
+```bash
+git clone https://github.com/ohcee/veil-info.git
+cd veil-info
+git checkout Veil-Info
+npm install
+npm start
+```
 
-### Then once inside the Java folder:
+Opens at `http://localhost:3000`
 
-### `node server.js`
+---
 
-## This should start the proxy. It will continue to make RPC calls until an error then restart.
+## Deploy
 
-## Open another terminal window and enter the following:
+Deployed via Cloudflare Pages. Any push to `Veil-Info` branch triggers an automatic redeploy.
 
-### `cd veil-info`
+Build command: `npm run build`
+Output directory: `build`
 
-### `cd src`
+---
 
-## Once inside the src folder:
+## Contributing
 
-### `npm start`
-
-# Dark mode:
-![Screenshot 2023-12-30 at 5 55 35 AM](https://github.com/ohcee/veil-info/assets/46406370/4a5706ae-3f00-41de-944a-8d433a675963)
-![Screenshot 2023-12-30 at 5 56 34 AM](https://github.com/ohcee/veil-info/assets/46406370/f1ef496f-2caf-428a-90e2-db3799f7c100)
-
-# Light mode:
-![Screenshot 2023-12-30 at 6 00 18 AM](https://github.com/ohcee/veil-info/assets/46406370/0fb67ee0-3b33-4570-ac59-28596e50dbb0)
-
+PRs welcome. Built and maintained by [@VEILMINER](https://twitter.com/veilminer007).
