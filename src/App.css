@@ -74,10 +74,9 @@ body {
 /* BEST BLOCK HASH — full dedicated strip */
 .BestBlockHash {
   width: 100%;
-  background: rgba(56, 189, 248, 0.06);
-  border-top: 1px solid rgba(56, 189, 248, 0.2);
-  padding: 10px 0 10px;
-  text-align: center;
+  background: transparent;
+  border-top: 1px solid var(--border);
+  padding: 12px 28px;
 }
 
 .BestBlockHash h3 {
