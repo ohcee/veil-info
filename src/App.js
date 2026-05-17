@@ -50,7 +50,7 @@ function App() {
           <p>10 VEIL</p>
           <h4>per block until max supply of</h4>
           <p style={{fontSize:'1.3rem'}}>300,000,000</p>
-          <h4>VEIL · est. 2037</h4>
+          <h4>VEIL</h4>
 
           <div style={{marginTop:'auto', paddingTop:'20px', display:'flex', flexDirection:'column', gap:'10px'}}>
             {[
