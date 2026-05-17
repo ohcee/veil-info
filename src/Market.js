@@ -40,10 +40,9 @@ const VeilMarketData = () => {
   if (!usdtData) return <div>Loading market data...</div>;
 
   const price = parseFloat(usdtData?.lastPrice || 0);
-  const volumeVeil = parseFloat(usdtData?.volume || 0);
-  // Volume from NonKYC is in base asset (VEIL) — convert to USD
-  const volumeUSD = volumeVeil * price;
-  const change = parseFloat(usdtData?.priceChangePercent || 0);
+  const volumeVeil = parseFloat(usdtData?.volumeNumber || 0);
+  const volumeUSD = parseFloat(usdtData?.volumeUsdNumber || 0);
+  const change = parseFloat(usdtData?.changePercentNumber || 0);
 
   return (
     <div className={flash ? "flash-green" : ""}>
