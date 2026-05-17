@@ -482,3 +482,74 @@ footer a { color: var(--accent); }
   0%   { background: rgba(5, 80, 174, 0.12); }
   100% { background: transparent; }
 }
+
+/* BEST BLOCK HASH BAR — updated with block number */
+.BestBlockHash {
+  width: 100%;
+  background: rgba(56, 189, 248, 0.05);
+  border-top: 1px solid rgba(56, 189, 248, 0.25);
+  padding: 12px 28px;
+}
+
+.bbh-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  color: #8b949e;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+
+.bbh-block {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #00ff88;
+  line-height: 1.2;
+}
+
+.bbh-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+  color: #38bdf8;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  word-break: break-all;
+  line-height: 1.5;
+}
+
+.bbh-hint {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.7rem;
+  color: #6e7681;
+  margin-top: 2px;
+  font-style: italic;
+}
+
+/* LIGHT MODE FIXES */
+.light .bbh-block {
+  color: #057a3a;
+}
+
+.light .bbh-value {
+  color: #0550ae;
+}
+
+.light .bbh-label {
+  color: #57606a;
+}
+
+.light .bbh-hint {
+  color: #57606a;
+}
+
+/* Fix light mode block number in current block panel */
+.light .block-number {
+  color: #0d1117 !important;
+}
+
+/* Fix all inline dark color styles in light mode */
+.light p {
+  color: var(--accent) !important;
+}
