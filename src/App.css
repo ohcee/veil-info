@@ -30,7 +30,9 @@ body {
 
 .App, .dark { background: var(--bg-primary); min-height: 100vh; }
 
-/* HEADER */
+/* =====================
+   HEADER
+   ===================== */
 .header {
   display: flex;
   align-items: center;
@@ -40,7 +42,6 @@ body {
   position: sticky;
   top: 0;
   z-index: 100;
-  gap: 20px;
   flex-direction: column;
 }
 
@@ -72,40 +73,57 @@ body {
   flex-shrink: 0;
 }
 
-/* BEST BLOCK HASH — full dedicated strip */
+/* =====================
+   BEST BLOCK HASH BAR
+   ===================== */
 .BestBlockHash {
   width: 100%;
   background: #0d1117;
-  border-top: none;
-  padding: 12px 28px;
+  padding: 10px 28px 14px;
+  text-align: center;
 }
 
-.BestBlockHash h3 {
+.bbh-label {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.95rem;
-  color: var(--blue);
-  margin: 0;
-  padding: 0;
-  text-transform: none;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  word-break: break-all;
-  white-space: normal;
-  line-height: 1.6;
-}
-
-.BestBlockHash h3::before {
-  content: "BEST BLOCK HASH  ";
-  display: block;
-  color: var(--text-muted);
-  font-size: 0.72rem;
+  font-size: 0.65rem;
+  color: #8b949e;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   margin-bottom: 4px;
   font-weight: 500;
 }
 
-/* THEME SLIDER */
+.bbh-block {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #00ff88;
+  line-height: 1.2;
+}
+
+.bbh-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+  color: #38bdf8;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  word-break: break-all;
+  line-height: 1.5;
+}
+
+.bbh-hint {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.7rem;
+  color: #6e7681;
+  margin-top: 2px;
+  font-style: italic;
+}
+
+.BestBlockHash h3 { display: none; }
+
+/* =====================
+   THEME SLIDER
+   ===================== */
 .theme-slider {
   display: flex;
   align-items: center;
@@ -125,7 +143,9 @@ body {
   cursor: pointer;
 }
 
-/* LAYOUT */
+/* =====================
+   LAYOUT
+   ===================== */
 .row {
   display: flex;
   flex-wrap: wrap;
@@ -155,7 +175,9 @@ body {
 
 .box .row { border-top: none; }
 
-/* TYPOGRAPHY */
+/* =====================
+   TYPOGRAPHY
+   ===================== */
 h1 { color: var(--accent); }
 
 h2 {
@@ -213,7 +235,9 @@ p {
 li { list-style: none; padding: 2px 0; }
 ul { padding: 0; }
 
-/* LINKS */
+/* =====================
+   LINKS
+   ===================== */
 a:link, a:visited {
   color: var(--text-secondary);
   text-decoration: none;
@@ -222,7 +246,9 @@ a:link, a:visited {
 }
 a:hover { color: var(--accent); }
 
-/* TABLES */
+/* =====================
+   TABLES
+   ===================== */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -251,7 +277,9 @@ td:last-child {
   font-size: 0.92rem;
 }
 
-/* PIE CHART */
+/* =====================
+   PIE CHART
+   ===================== */
 .pie-wrapper {
   flex: 1;
   display: flex;
@@ -266,6 +294,7 @@ td:last-child {
 }
 
 .border-bottom { border-bottom: 1px solid var(--border); margin: 16px 0; }
+
 .bottom-border {
   display: flex;
   justify-content: center;
@@ -276,7 +305,9 @@ td:last-child {
   border: 1px solid var(--border);
 }
 
-/* FLASH */
+/* =====================
+   FLASH ANIMATIONS
+   ===================== */
 @keyframes flashGreen {
   0%   { background: rgba(0,255,136,0.15); }
   100% { background: transparent; }
@@ -285,10 +316,20 @@ td:last-child {
   0%   { background: rgba(56,189,248,0.15); }
   100% { background: transparent; }
 }
+@keyframes flashGreenLight {
+  0%   { background: rgba(5, 122, 58, 0.12); }
+  100% { background: transparent; }
+}
+@keyframes flashBlueLight {
+  0%   { background: rgba(5, 80, 174, 0.12); }
+  100% { background: transparent; }
+}
 .flash-green { animation: flashGreen 0.8s ease-out; }
 .flash-blue  { animation: flashBlue 0.8s ease-out; }
 
-/* ANNOUNCEMENT BOARD */
+/* =====================
+   ANNOUNCEMENT BOARD
+   ===================== */
 .column ul li h2 {
   font-size: 1rem;
   font-weight: 500;
@@ -303,7 +344,9 @@ td:last-child {
 }
 .column ul li h2 a:hover { color: var(--accent); padding-left: 8px; }
 
-/* FOOTER */
+/* =====================
+   FOOTER
+   ===================== */
 footer {
   background: #0d1117;
   border-top: 1px solid var(--border);
@@ -321,77 +364,9 @@ footer a { color: var(--accent); }
 
 .csheader h3 { line-height: 2.2; font-size: 0.9rem; }
 
-/* LIGHT MODE */
-.light {
-  --bg-primary: #ffffff;
-  --bg-card: #f6f8fa;
-  --bg-card-hover: #eaeef2;
-  --accent: #1a7f37;
-  --blue: #0969da;
-  --purple: #8250df;
-  --orange: #bc4c00;
-  --text-primary: #1f2328;
-  --text-secondary: #656d76;
-  --text-muted: #6e7681;
-  --border: rgba(208,215,222,1);
-}
-.light .header { background: #f6f8fa; }
-.light .BestBlockHash { background: rgba(9,105,218,0.06); border-top-color: rgba(9,105,218,0.2); }
-.light footer { background: #f6f8fa; }
-.light p { color: var(--accent); }
-
-/* RESPONSIVE */
-@media screen and (max-width: 768px) {
-  .header { padding: 0 16px; }
-  .header h1 { font-size: 1.2rem; }
-  .BestBlockHash h3 { font-size: 0.75rem; }
-  .column { min-width: 100%; padding: 20px 16px; }
-  table { font-size: 0.82rem; }
-  p { font-size: 1.4rem; }
-  td { padding: 8px 6px; }
-}
-
-/* BEST BLOCK HASH — dedicated strip */
-.BestBlockHash {
-  width: 100%;
-  background: rgba(56, 189, 248, 0.05);
-  border-top: 1px solid rgba(56, 189, 248, 0.25);
-  padding: 10px 28px;
-  text-align: center;
-}
-
-.bbh-label {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.68rem;
-  color: #8b949e;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  margin-bottom: 4px;
-  font-weight: 500;
-}
-
-.bbh-value {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.92rem;
-  color: #38bdf8;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  word-break: break-all;
-  line-height: 1.5;
-}
-
-.bbh-hint {
-  font-family: 'Inter', sans-serif;
-  font-size: 0.72rem;
-  color: #6e7681;
-  margin-top: 4px;
-  font-style: italic;
-}
-
-/* Override any old BestBlockHash h3 rules */
-.BestBlockHash h3 { display: none; }
-
-/* LIGHT MODE OVERRIDES — high contrast */
+/* =====================
+   LIGHT MODE
+   ===================== */
 .light {
   --bg-primary: #f0f2f5;
   --bg-card: #ffffff;
@@ -409,147 +384,40 @@ footer a { color: var(--accent); }
   --danger: #cf222e;
 }
 
-.light .header {
-  background: #ffffff;
-}
-
-.light .BestBlockHash {
-  background: rgba(5, 80, 174, 0.06);
-  border-top-color: rgba(5, 80, 174, 0.3);
-}
-
-.light .bbh-label { color: #57606a; }
+.light .header { background: #ffffff; }
+.light .BestBlockHash { background: #ffffff; }
+.light .bbh-block { color: #057a3a; }
 .light .bbh-value { color: #0550ae; }
+.light .bbh-label { color: #57606a; }
 .light .bbh-hint  { color: #57606a; }
-
-.light footer {
-  background: #ffffff;
-}
-
-.light p {
-  color: var(--accent);
-}
-
-.light .table-cell {
-  color: #57606a;
-}
-
-.light td:last-child {
-  color: #0d1117;
-}
-
-.light .table-row:hover {
-  background: rgba(5, 80, 174, 0.04);
-}
-
+.light footer { background: #f6f8fa; }
+.light p { color: var(--accent) !important; }
+.light .table-cell { color: #57606a; }
+.light td:last-child { color: #0d1117; }
+.light .table-row:hover { background: rgba(5, 80, 174, 0.04); }
 .light h3 { color: #57606a; }
 .light h4 { color: #24292f; }
 .light h5 { color: #24292f; }
 .light h6 { color: #57606a; }
-
-.light a:link,
-.light a:visited {
-  color: #0550ae;
-}
-
-.light a:hover {
-  color: #057a3a;
-}
-
-.light .column ul li h2 a {
-  color: #24292f;
-}
-
-.light .column ul li h2 a:hover {
-  color: #057a3a;
-}
-
-.light .pie-wrapper,
-.light .bottom-border {
-  background: rgba(0,0,0,0.04);
-  border-color: rgba(208,215,222,1);
-}
-
+.light a:link, .light a:visited { color: #0550ae; }
+.light a:hover { color: #057a3a; }
+.light .column ul li h2 a { color: #24292f; }
+.light .column ul li h2 a:hover { color: #057a3a; }
+.light .pie-wrapper, .light .bottom-border { background: rgba(0,0,0,0.04); border-color: rgba(208,215,222,1); }
 .light .flash-green { animation: flashGreenLight 0.8s ease-out; }
 .light .flash-blue  { animation: flashBlueLight 0.8s ease-out; }
+.light .block-number { color: #0d1117 !important; }
 
-@keyframes flashGreenLight {
-  0%   { background: rgba(5, 122, 58, 0.12); }
-  100% { background: transparent; }
-}
-
-@keyframes flashBlueLight {
-  0%   { background: rgba(5, 80, 174, 0.12); }
-  100% { background: transparent; }
-}
-
-/* BEST BLOCK HASH BAR — updated with block number */
-.BestBlockHash {
-  width: 100%;
-  background: rgba(56, 189, 248, 0.05);
-  border-top: 1px solid rgba(56, 189, 248, 0.25);
-  padding: 12px 28px;
-}
-
-.bbh-label {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.65rem;
-  color: #8b949e;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  margin-bottom: 4px;
-  font-weight: 500;
-}
-
-.bbh-block {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: #00ff88;
-  line-height: 1.2;
-}
-
-.bbh-value {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.85rem;
-  color: #38bdf8;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  word-break: break-all;
-  line-height: 1.5;
-}
-
-.bbh-hint {
-  font-family: 'Inter', sans-serif;
-  font-size: 0.7rem;
-  color: #6e7681;
-  margin-top: 2px;
-  font-style: italic;
-}
-
-/* LIGHT MODE FIXES */
-.light .bbh-block {
-  color: #057a3a;
-}
-
-.light .bbh-value {
-  color: #0550ae;
-}
-
-.light .bbh-label {
-  color: #57606a;
-}
-
-.light .bbh-hint {
-  color: #57606a;
-}
-
-/* Fix light mode block number in current block panel */
-.light .block-number {
-  color: #0d1117 !important;
-}
-
-/* Fix all inline dark color styles in light mode */
-.light p {
-  color: var(--accent) !important;
+/* =====================
+   RESPONSIVE
+   ===================== */
+@media screen and (max-width: 768px) {
+  .header-top { padding: 0 16px; }
+  .header h1 { font-size: 1.2rem; }
+  .BestBlockHash { padding: 8px 16px 12px; }
+  .bbh-value { font-size: 0.72rem; }
+  .column { min-width: 100%; padding: 20px 16px; }
+  table { font-size: 0.82rem; }
+  p { font-size: 1.4rem; }
+  td { padding: 8px 6px; }
 }
