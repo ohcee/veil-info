@@ -2,7 +2,7 @@
 
 A live dashboard for the Veil privacy blockchain displaying real-time block data, market prices, mining stats, and network information.
 
-**Live at:** https://veil-info.donkeybabe123.workers.dev
+**Live at:** https://veil-info.org
 
 ---
 
