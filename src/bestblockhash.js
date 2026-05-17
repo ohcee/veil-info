@@ -27,17 +27,24 @@ const BestBlockHash = () => {
 
   return (
     <div className={`BestBlockHash ${flash ? 'flash-blue' : ''}`}>
-      <div style={{display:'flex', justifyContent:'center', alignItems:'center', gap:'40px', flexWrap:'wrap'}}>
-        <div style={{textAlign:'center'}}>
-          <div className="bbh-label">CURRENT BLOCK</div>
-          <div className="bbh-block">{data?.blocks?.toLocaleString() ?? "—"}</div>
-        </div>
-        <div style={{textAlign:'center', flex:1, minWidth:0}}>
-          <div className="bbh-label">BEST BLOCK HASH</div>
-          <div className="bbh-value">{data?.hash ?? "loading..."}</div>
-          <div className="bbh-hint">Use this hash to verify your node is synced with the network</div>
-        </div>
+      {/* Current Block — centered above */}
+      <div style={{textAlign:'center', marginBottom:'8px'}}>
+        <div className="bbh-label">CURRENT BLOCK</div>
+        <div className="bbh-block">{data?.blocks?.toLocaleString() ?? "—"}</div>
       </div>
+      {/* Divider */}
+      <div style={{borderTop:'1px solid rgba(56,189,248,0.15)', margin:'8px 0'}} />
+      {/* Hash — centered below */}
+      <div style={{textAlign:'center'}}>
+        <div className="bbh-label">BEST BLOCK HASH</div>
+        <div className="bbh-value">{data?.hash ?? "loading..."}</div>
+        <div className="bbh-hint">Use this hash to verify your node is synced with the network</div>
+      </div>
+    </div>
+  );
+};
+
+export default BestBlockHash;
     </div>
   );
 };
