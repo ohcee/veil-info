@@ -24,12 +24,34 @@ const Chainsize = () => {
   if (error) return <div>Error loading chain size</div>;
 
   return (
-    <div className="csheader">
-      {blockchainInfo && (
-        <h3>Currently you need <p>{sizeInGB.toFixed(2)} GB</p> of free storage to download <p>the blockchain</p> to participate in <p><b>STAKING</b> with the core wallet</p></h3>
-      )}
-      <h6><a href="https://veil.freshdesk.com/support/solutions/articles/43000468343-staking-faq" target="_blank" rel="noopener noreferrer">Staking</a> FAQ</h6>
+    <div style={{textAlign:'center', display:'flex', flexDirection:'column', height:'100%'}}>
+      <h3>Chain Size</h3>
+      <div style={{
+        fontFamily:"'JetBrains Mono',monospace",
+        fontSize:'2.5rem',
+        fontWeight:'800',
+        color:'#00ff88',
+        margin:'8px 0',
+      }}>
+        {blockchainInfo ? `${sizeInGB.toFixed(2)} GB` : "—"}
+      </div>
+      <h4>of free storage needed</h4>
+      <h4>to download the blockchain</h4>
+      <h4 style={{marginTop:'12px'}}>and participate in</h4>
+      <div style={{
+        fontFamily:"'JetBrains Mono',monospace",
+        fontSize:'1rem',
+        fontWeight:'700',
+        color:'#c084fc',
+        marginTop:'8px',
+        letterSpacing:'0.1em',
+      }}>STAKING</div>
+      <h4>with the core wallet</h4>
+      <h6 style={{marginTop:'auto', paddingTop:'16px'}}>
+        <a href="https://veil.freshdesk.com/support/solutions/articles/43000468343-staking-faq" target="_blank" rel="noopener noreferrer">Staking FAQ</a>
+      </h6>
     </div>
   );
 };
+
 export default Chainsize;
