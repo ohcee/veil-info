@@ -9,7 +9,7 @@ A live dashboard for the Veil privacy blockchain displaying real-time block data
 ## Features
 
 - Live prices from NonKYC (VEIL/USDT, VEIL/BTC, VEIL/XMR)
-- Real-time block data updating every 15 seconds
+- Real-time block data updating every 60 seconds
 - Difficulty tracking with trend arrows (▲▼) for all algorithms
 - 24-hour block split pie chart (PoS, ProgPow, RandomX, SHA256d)
 - Superblock countdown with economics info
