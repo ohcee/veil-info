@@ -95,7 +95,7 @@ const SuperBlock = () => {
           color:'#c9d1d9',
           lineHeight:1.7,
         }}>
-          The Monthly Superblock is Veil's automated funding mechanism that pays for network operations, project management, and developer support once per month.
+          The Monthly Superblock is Veil's funding mechanism that pays for network operations, project management, and developer support once per month.
         </div>
       </div>
     </div>
