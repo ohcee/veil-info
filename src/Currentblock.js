@@ -26,41 +26,32 @@ const Currentblock = () => {
   }, []);
 
   return (
-    <div className={flash ? "flash-blue" : ""} style={{
-      display:'flex',
-      flexDirection:'column',
-      height:'100%',
-      justifyContent:'space-between',
-      textAlign:'center',
-    }}>
+    <div className={`block-panel ${flash ? 'flash-blue' : ''}`} style={{textAlign:'center', display:'flex', flexDirection:'column', height:'100%'}}>
       <h3>Current Block</h3>
-
-      {/* BIG BLOCK NUMBER */}
-      <div style={{
-        fontFamily:"'JetBrains Mono',monospace",
-        fontSize:'3rem',
-        fontWeight:'800',
+      <div className="block-number" style={{
+        fontFamily: "'JetBrains Mono', monospace",
+        fontSize: '3rem',
+        fontWeight: '800',
         color: flash ? '#38bdf8' : '#f0f6fc',
-        transition:'color 0.5s',
-        letterSpacing:'-0.02em',
-        lineHeight:1,
-        margin:'16px 0',
+        transition: 'color 0.5s',
+        letterSpacing: '-0.02em',
+        lineHeight: 1.1,
+        margin: '8px 0',
       }}>
         {data?.blocks?.toLocaleString() ?? "—"}
       </div>
-
-      {/* STAT PILLS */}
       <div style={{
-        display:'flex',
-        justifyContent:'space-around',
-        gap:'8px',
-        flexWrap:'wrap',
-        marginTop:'auto',
+        display: 'flex',
+        justifyContent: 'center',
+        gap: '12px',
+        marginTop: 'auto',
+        flexWrap: 'wrap',
+        paddingTop: '16px',
       }}>
         {[
-          {label:'Block Time', value:'60 sec',   color:'#00ff88'},
-          {label:'Consensus',  value:'PoS + PoW',color:'#c084fc'},
-          {label:'Split',      value:'50 / 50',  color:'#38bdf8'},
+          {label:'Block Time', value:'60 sec',    color:'#00ff88'},
+          {label:'Consensus',  value:'PoS + PoW', color:'#c084fc'},
+          {label:'Split',      value:'50 / 50',   color:'#38bdf8'},
         ].map(({label, value, color}) => (
           <div key={label} style={{
             flex:'1',
@@ -68,26 +59,25 @@ const Currentblock = () => {
             background:'rgba(0,0,0,0.3)',
             borderRadius:'8px',
             border:`1px solid ${color}33`,
-            padding:'12px 8px',
+            padding:'10px 8px',
           }}>
             <div style={{
               fontFamily:"'JetBrains Mono',monospace",
-              fontSize:'0.62rem',
+              fontSize:'0.6rem',
               color:'#8b949e',
               letterSpacing:'0.12em',
               textTransform:'uppercase',
-              marginBottom:'6px',
+              marginBottom:'4px',
             }}>{label}</div>
             <div style={{
               fontFamily:"'JetBrains Mono',monospace",
-              fontSize:'1rem',
+              fontSize:'0.95rem',
               color,
               fontWeight:'700',
             }}>{value}</div>
           </div>
         ))}
       </div>
-
       <h6 style={{marginTop:'14px'}}>
         <a href="https://veil-project.com/faqs/" target="_blank" rel="noopener noreferrer">FAQ</a>
       </h6>
