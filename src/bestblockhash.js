@@ -35,7 +35,6 @@ const BestBlockHash = () => {
       <div style={{textAlign:'center'}}>
         <div className="bbh-label">BEST BLOCK HASH</div>
         <div className="bbh-value">{data ? data.hash : "loading..."}</div>
-        <div className="bbh-hint">Use this hash to verify your node is synced with the network</div>
       </div>
     </div>
   );
