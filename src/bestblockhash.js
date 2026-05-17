@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { EXPLORER_API } from "./config";
 
 const BestBlockHash = () => {
-  const [hash, setHash] = useState(null);
+  const [data, setData] = useState(null);
   const [flash, setFlash] = useState(false);
   const prev = useRef(null);
 
@@ -11,13 +11,13 @@ const BestBlockHash = () => {
       try {
         const response = await fetch(`${EXPLORER_API}/api/GetBlockchainInfo`);
         if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
-        const data = await response.json();
-        if (prev.current !== null && prev.current !== data.bestblockhash) {
+        const result = await response.json();
+        if (prev.current !== null && prev.current !== result.bestblockhash) {
           setFlash(true);
           setTimeout(() => setFlash(false), 1000);
         }
-        prev.current = data.bestblockhash;
-        setHash(data.bestblockhash);
+        prev.current = result.bestblockhash;
+        setData({ hash: result.bestblockhash, blocks: result.blocks });
       } catch (err) { console.error(err); }
     };
     fetchData();
@@ -27,9 +27,17 @@ const BestBlockHash = () => {
 
   return (
     <div className={`BestBlockHash ${flash ? 'flash-blue' : ''}`}>
-      <div className="bbh-label">BEST BLOCK HASH</div>
-      <div className="bbh-value">{hash ?? "loading..."}</div>
-      <div className="bbh-hint">Use this hash to verify your node is synced with the network</div>
+      <div style={{display:'flex', justifyContent:'center', alignItems:'center', gap:'40px', flexWrap:'wrap'}}>
+        <div style={{textAlign:'center'}}>
+          <div className="bbh-label">CURRENT BLOCK</div>
+          <div className="bbh-block">{data?.blocks?.toLocaleString() ?? "—"}</div>
+        </div>
+        <div style={{textAlign:'center', flex:1, minWidth:0}}>
+          <div className="bbh-label">BEST BLOCK HASH</div>
+          <div className="bbh-value">{data?.hash ?? "loading..."}</div>
+          <div className="bbh-hint">Use this hash to verify your node is synced with the network</div>
+        </div>
+      </div>
     </div>
   );
 };
