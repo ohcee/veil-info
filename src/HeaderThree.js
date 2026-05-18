@@ -32,7 +32,7 @@ const HeaderThree = () => {
       <p style={{
         color: flash ? '#00ff88' : undefined,
         transition: 'color 0.3s',
-        fontSize: '1.1rem'
+        fontSize: '1.5rem'
       }}>
         {veilPrice === null ? "—" : `${veilPrice.toFixed(8)} BTC`}
       </p>
