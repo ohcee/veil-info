@@ -28,7 +28,7 @@ const Chainsize = () => {
       <h3>Chain Size</h3>
       <div style={{
         fontFamily:"'JetBrains Mono',monospace",
-        fontSize:'2.5rem',
+        fontSize:'1.5rem',
         fontWeight:'800',
         color:'#00ff88',
         margin:'8px 0',
