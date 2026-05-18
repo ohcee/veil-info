@@ -103,10 +103,7 @@ function App() {
 
       <footer>
         <h5>
-          Made with love by{' '}
-          <a href="https://twitter.com/veilminer007" target="_blank" rel="noopener noreferrer">
-            @VEILMINER
-          </a>{' '}
+          Made with love by ohcee
           {new Date().getFullYear()}
         </h5>
       </footer>
