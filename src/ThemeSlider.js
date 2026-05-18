@@ -2,22 +2,18 @@ import React from 'react';
 
 const ThemeSlider = ({ themeMode, toggleTheme }) => (
   <div className="theme-slider">
-    <label style={{ color: '#3890c8' }}>
-      Light Mode
-    </label>
+    <span title="Light Mode">☀️</span>
     <label>
       <input
         type="range"
         min="0"
         max="1"
         step="1"
-        value={themeMode === 'light' ? '0' : '1'} // Initially set to 'dark'
+        value={themeMode === 'light' ? '0' : '1'}
         onChange={toggleTheme}
       />
     </label>
-    <label>
-      Dark Mode
-    </label>
+    <span title="Dark Mode">🌙</span>
   </div>
 );
 
