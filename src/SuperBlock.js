@@ -41,7 +41,7 @@ const SuperBlock = () => {
 
       <div style={{
         fontFamily:"'JetBrains Mono',monospace",
-        fontSize:'2rem',
+        fontSize:'1.5rem',
         fontWeight:'800',
         color:'#fbbf24',
         margin:'8px 0',
