@@ -103,7 +103,7 @@ function App() {
 
       <footer>
         <h5>
-          Made with love by ohcee
+          - Made with love by ohcee -
           {new Date().getFullYear()}
         </h5>
       </footer>
