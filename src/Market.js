@@ -40,8 +40,12 @@ const VeilMarketData = () => {
   if (!usdtData) return <div>Loading market data...</div>;
 
   const price = parseFloat(usdtData?.lastPrice || 0);
-  const volumeVeil = parseFloat(usdtData?.volumeNumber || 0);
-  const volumeUSD = parseFloat(usdtData?.volumeUsdNumber || 0);
+  const volumeVeil = parseFloat(usdtData?.volumeNumber || 0)
+    + parseFloat(btcData?.volumeNumber || 0)
+    + parseFloat(xmrData?.volumeNumber || 0);
+  const volumeUSD = parseFloat(usdtData?.volumeUsdNumber || 0)
+    + parseFloat(btcData?.volumeUsdNumber || 0)
+    + parseFloat(xmrData?.volumeUsdNumber || 0);
   const change = parseFloat(usdtData?.changePercentNumber || 0);
 
   return (
@@ -51,17 +55,21 @@ const VeilMarketData = () => {
         <tbody>
           <tr className="table-row">
             <td className="table-cell">Price USDT</td>
-            <td style={{color:"#00ff88", fontWeight:"700"}}>
+            <td style={{color: usdtData?.lastPriceUpDown === 'up' ? '#00ff88' : '#ff4d6d', fontWeight:"700"}}>
               ${price.toFixed(6)}
             </td>
           </tr>
           <tr className="table-row">
             <td className="table-cell">Price BTC</td>
-            <td>{parseFloat(btcData?.lastPrice || 0).toFixed(8)}</td>
+            <td style={{color: btcData?.lastPriceUpDown === 'up' ? '#00ff88' : '#ff4d6d', fontWeight:"700"}}>
+              {parseFloat(btcData?.lastPrice || 0).toFixed(8)}
+            </td>
           </tr>
           <tr className="table-row">
             <td className="table-cell">Price XMR</td>
-            <td>{parseFloat(xmrData?.lastPrice || 0).toFixed(8)}</td>
+            <td style={{color: xmrData?.lastPriceUpDown === 'up' ? '#00ff88' : '#ff4d6d', fontWeight:"700"}}>
+              {parseFloat(xmrData?.lastPrice || 0).toFixed(8)}
+            </td>
           </tr>
           <tr className="table-row">
             <td className="table-cell">24h Vol (VEIL)</td>

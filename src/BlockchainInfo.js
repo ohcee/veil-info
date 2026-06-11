@@ -73,10 +73,10 @@ function BlockchainInfo() {
               <Arrow current={info.difficulty_sha256d} prev={prevInfo?.difficulty_sha256d ?? null} />
             </td>
           </tr>
-          <tr className="table-row">
+          {/* <tr className="table-row">
             <td className="table-cell">Chain Size</td>
             <td>{formatGB(info.size_on_disk)}</td>
-          </tr>
+          </tr> */}
         </tbody>
       </table>
 

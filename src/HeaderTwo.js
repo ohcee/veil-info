@@ -18,7 +18,7 @@ const HeaderTwo = () => {
           setTimeout(() => setFlash(false), 800);
         }
         prevPrice.current = price;
-        setVeilPrice(price);
+        setVeilPrice(data);
       } catch (err) { console.error(err); }
     };
     fetchData();
@@ -30,11 +30,11 @@ const HeaderTwo = () => {
     <div style={{textAlign:'center', marginBottom:'8px'}}>
       <h3>VEIL / XMR</h3>
       <p style={{
-        color: flash ? '#00ff88' : undefined,
+        color: veilPrice?.lastPriceUpDown === 'up' ? '#00ff88' : '#ff4d6d',
         transition: 'color 0.3s',
-        fontSize: '1.1rem'
+        fontSize: '1.4rem'
       }}>
-        {veilPrice === null ? "—" : `${veilPrice.toFixed(8)} XMR`}
+        {veilPrice === null ? "—" : `${parseFloat(veilPrice.lastPrice).toFixed(8)} XMR`}
       </p>
     </div>
   );
