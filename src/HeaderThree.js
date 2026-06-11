@@ -12,10 +12,7 @@ const HeaderThree = () => {
         if (!response.ok) throw new Error("failed");
         const data = await response.json();
         const price = parseFloat(data?.lastPrice || 0);
-        if (prevPrice.current !== null && prevPrice.current !== price) {
-          setFlash(true);
-          setTimeout(() => setFlash(false), 800);
-        }
+      
         prevPrice.current = price;
         setVeilPrice(data);
       } catch (err) { console.error(err); }
