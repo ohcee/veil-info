@@ -3,7 +3,6 @@ import { NONKYC_BTC } from "./config";
 
 const HeaderThree = () => {
   const [veilPrice, setVeilPrice] = useState(null);
-  const [flash, setFlash] = useState(false);
   const prevPrice = useRef(null);
 
   useEffect(() => {

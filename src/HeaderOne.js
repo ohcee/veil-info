@@ -3,7 +3,6 @@ import { NONKYC_USDT } from "./config";
 
 const HeaderOne = () => {
   const [veilPrice, setVeilPrice] = useState(null);
-  const [flash, setFlash] = useState(false);
   const prevPrice = useRef(null);
 
   useEffect(() => {

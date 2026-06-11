@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { EXPLORER_API } from "./config";
 
-const formatGB = (bytes) => {
-  if (!bytes) return "—";
-  return (bytes / (1024 * 1024 * 1024)).toFixed(2) + " GB";
-};
+//const formatGB = (bytes) => {
+//  if (!bytes) return "—";
+//  return (bytes / (1024 * 1024 * 1024)).toFixed(2) + " GB";
+//};
 
 const Arrow = ({ current, prev }) => {
   if (prev === null || current === prev) return <span style={{color:'#8b949e'}}> —</span>;

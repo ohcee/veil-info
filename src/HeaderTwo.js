@@ -3,7 +3,6 @@ import { NONKYC_XMR } from "./config";
 
 const HeaderTwo = () => {
   const [veilPrice, setVeilPrice] = useState(null);
-  const [flash, setFlash] = useState(false);
   const prevPrice = useRef(null);
 
   useEffect(() => {
