@@ -1,21 +1,65 @@
 import React, { useState, useEffect } from "react";
 import { EXPLORER_API } from "./config";
 
-//const formatGB = (bytes) => {
-//  if (!bytes) return "—";
-//  return (bytes / (1024 * 1024 * 1024)).toFixed(2) + " GB";
-//};
+// ─── DAG Constants ───────────────────────────────────────
+const DAG_INIT_BYTES = 2147483648; // 2^31 = 2 GB
+const DAG_GROWTH_BYTES = 12582912; // 2^23 | 2^22 ≈ 12 MB per epoch
+const EPOCH_LENGTH_POST = 8175;
+const DAG_REDUCTION_HEIGHT = 2100000;
+const BLOCKS_PER_YEAR = 525600;
 
+// Reference for date estimation
+const REF_BLOCK = 3867000;
+const REF_DATE = new Date("2026-06-13");
+
+function calcEpoch(block) {
+  if (block < DAG_REDUCTION_HEIGHT) return Math.floor(block / 5525);
+  return Math.floor((block - DAG_REDUCTION_HEIGHT) / EPOCH_LENGTH_POST);
+}
+
+function calcDAGBytes(epoch) {
+  return DAG_INIT_BYTES + epoch * DAG_GROWTH_BYTES;
+}
+
+function formatGB(bytes) {
+  return (bytes / (1024 * 1024 * 1024)).toFixed(2);
+}
+
+function epochForVRAM(vramGB) {
+  const vramBytes = vramGB * 1024 * 1024 * 1024;
+  return Math.floor((vramBytes - DAG_INIT_BYTES) / DAG_GROWTH_BYTES);
+}
+
+function blockForEpoch(epoch) {
+  return DAG_REDUCTION_HEIGHT + epoch * EPOCH_LENGTH_POST;
+}
+
+function estimateDate(targetBlock) {
+  const diff = targetBlock - REF_BLOCK;
+  const date = new Date(REF_DATE.getTime() + diff * 60 * 1000);
+  return date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+}
+
+const GPU_TIERS = [
+  { label: "4 GB", vram: 4 },
+  { label: "6 GB", vram: 6 },
+  { label: "8 GB", vram: 8 },
+  { label: "12 GB", vram: 12 },
+];
+
+// ─── Arrow Component ─────────────────────────────────────
 const Arrow = ({ current, prev }) => {
   if (prev === null || current === prev) return <span style={{color:'#8b949e'}}> —</span>;
   if (current > prev) return <span style={{color:'#00ff88'}}> ▲</span>;
   return <span style={{color:'#ff4d6d'}}> ▼</span>;
 };
 
+// ─── Main Component ──────────────────────────────────────
 function BlockchainInfo() {
   const [info, setInfo] = useState(null);
   const [prevInfo, setPrevInfo] = useState(null);
   const [error, setError] = useState(null);
+  const [showDAG, setShowDAG] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,6 +83,15 @@ function BlockchainInfo() {
 
   if (error) return <div>Error loading blockchain info</div>;
   if (!info) return <div>Loading...</div>;
+
+  // DAG calculations
+  const blockHeight = info.blocks;
+  const epoch = calcEpoch(blockHeight);
+  const dagBytes = calcDAGBytes(epoch);
+  const dagGB = formatGB(dagBytes);
+  const nextEpochBlock = blockForEpoch(epoch + 1);
+  const blocksUntilNext = nextEpochBlock - blockHeight;
+  const growthPerYear = ((BLOCKS_PER_YEAR / EPOCH_LENGTH_POST) * DAG_GROWTH_BYTES) / (1024 * 1024);
 
   return (
     <div style={{display:'flex', flexDirection:'column', height:'100%'}}>
@@ -73,12 +126,80 @@ function BlockchainInfo() {
               <Arrow current={info.difficulty_sha256d} prev={prevInfo?.difficulty_sha256d ?? null} />
             </td>
           </tr>
-          {/* <tr className="table-row">
-            <td className="table-cell">Chain Size</td>
-            <td>{formatGB(info.size_on_disk)}</td>
-          </tr> */}
         </tbody>
       </table>
+
+      {/* DAG Size Section */}
+      <div className="border-bottom" />
+      <div style={{ textAlign: 'center' }}>
+        <h3 style={{ marginBottom: '4px' }}>ProgPow DAG</h3>
+        <div style={{
+          fontFamily: "'JetBrains Mono', monospace",
+          fontSize: '1.3rem',
+          fontWeight: '800',
+          color: '#c084fc',
+          margin: '4px 0',
+        }}>
+          {dagGB} GB
+        </div>
+        <div style={{
+          fontFamily: "'JetBrains Mono', monospace",
+          fontSize: '0.75rem',
+          color: '#8b949e',
+        }}>
+          Epoch {epoch} · ~{growthPerYear.toFixed(0)} MB/yr · next in {blocksUntilNext.toLocaleString()} blocks
+        </div>
+
+        <button
+          onClick={() => setShowDAG(!showDAG)}
+          style={{
+            marginTop: '8px',
+            padding: '4px 12px',
+            fontSize: '0.8rem',
+            background: 'none',
+            border: '1px solid #444',
+            color: '#8b949e',
+            borderRadius: '6px',
+            cursor: 'pointer',
+          }}
+        >
+          {showDAG ? 'Hide' : 'GPU Compatibility ▼'}
+        </button>
+
+        {showDAG && (
+          <table style={{ width: '100%', marginTop: '8px', fontSize: '0.85rem', borderCollapse: 'collapse' }}>
+            <tbody>
+              {GPU_TIERS.map(gpu => {
+                const maxEpoch = epochForVRAM(gpu.vram);
+                const maxBlock = blockForEpoch(maxEpoch);
+                const canMine = dagBytes < gpu.vram * 1024 * 1024 * 1024;
+                const estDate = estimateDate(maxBlock);
+
+                return (
+                  <tr key={gpu.label} className="table-row">
+                    <td className="table-cell" style={{ fontWeight: '600' }}>{gpu.label} VRAM</td>
+                    <td style={{
+                      color: canMine ? '#00ff88' : '#ff4d6d',
+                      fontWeight: '700',
+                      fontFamily: "'JetBrains Mono', monospace",
+                    }}>
+                      {canMine ? `✓ until ~${estDate}` : `✗ exceeded`}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        )}
+        <div style={{
+          fontSize: '0.65rem',
+          color: '#666',
+          marginTop: '6px',
+          fontStyle: 'italic',
+        }}>
+          DAG size approximate · dates estimated at 60s block time
+        </div>
+      </div>
 
       <div className="border-bottom" />
       <h3>Mining Software</h3>
