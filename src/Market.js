@@ -1,51 +1,39 @@
-import React, { useState, useEffect, useRef } from "react";
-import { NONKYC_USDT, NONKYC_BTC, NONKYC_XMR } from "./config";
+import React, { useState, useEffect, useRef, useContext } from "react";
+import DataContext from "./DataContext";
 
 const VeilMarketData = () => {
-  const [usdtData, setUsdtData] = useState(null);
-  const [btcData, setBtcData] = useState(null);
-  const [xmrData, setXmrData] = useState(null);
+  const { market } = useContext(DataContext);
+  const usdtData = market?.usdt ?? null;
+  const btcData = market?.btc ?? null;
+  const xmrData = market?.xmr ?? null;
+  const usdcData = market?.usdc ?? null;
+
   const [flash, setFlash] = useState(false);
   const prevPrice = useRef(null);
 
   useEffect(() => {
-    const fetchAll = async () => {
-      try {
-        const [usdtRes, btcRes, xmrRes] = await Promise.all([
-          fetch(NONKYC_USDT),
-          fetch(NONKYC_BTC),
-          fetch(NONKYC_XMR),
-        ]);
-        const [usdt, btc, xmr] = await Promise.all([
-          usdtRes.json(),
-          btcRes.json(),
-          xmrRes.json(),
-        ]);
-        const newPrice = parseFloat(usdt.lastPrice || 0);
-        if (prevPrice.current !== null && prevPrice.current !== newPrice) {
-          setFlash(true);
-          setTimeout(() => setFlash(false), 800);
-        }
-        prevPrice.current = newPrice;
-        setUsdtData(usdt);
-        setBtcData(btc);
-        setXmrData(xmr);
-      } catch (err) { console.error(err); }
-    };
-    fetchAll();
-    const intervalId = setInterval(fetchAll, 60000);
-    return () => clearInterval(intervalId);
-  }, []);
+    if (!usdtData) return;
+    const newPrice = parseFloat(usdtData.lastPrice || 0);
+    if (prevPrice.current !== null && prevPrice.current !== newPrice) {
+      setFlash(true);
+      const t = setTimeout(() => setFlash(false), 800);
+      prevPrice.current = newPrice;
+      return () => clearTimeout(t);
+    }
+    prevPrice.current = newPrice;
+  }, [usdtData?.lastPrice, usdtData]);
 
   if (!usdtData) return <div>Loading market data...</div>;
 
   const price = parseFloat(usdtData?.lastPrice || 0);
   const volumeVeil = parseFloat(usdtData?.volumeNumber || 0)
     + parseFloat(btcData?.volumeNumber || 0)
-    + parseFloat(xmrData?.volumeNumber || 0);
+    + parseFloat(xmrData?.volumeNumber || 0)
+    + parseFloat(usdcData?.volumeNumber || 0);
   const volumeUSD = parseFloat(usdtData?.volumeUsdNumber || 0)
     + parseFloat(btcData?.volumeUsdNumber || 0)
-    + parseFloat(xmrData?.volumeUsdNumber || 0);
+    + parseFloat(xmrData?.volumeUsdNumber || 0)
+    + parseFloat(usdcData?.volumeUsdNumber || 0);
   const change = parseFloat(usdtData?.changePercentNumber || 0);
 
   return (
@@ -59,6 +47,14 @@ const VeilMarketData = () => {
               ${price.toFixed(6)}
             </td>
           </tr>
+          {usdcData && (
+            <tr className="table-row">
+              <td className="table-cell">Price USDC</td>
+              <td style={{color: usdcData?.lastPriceUpDown === 'up' ? '#00ff88' : '#ff4d6d', fontWeight:"700"}}>
+                ${parseFloat(usdcData?.lastPrice || 0).toFixed(6)}
+              </td>
+            </tr>
+          )}
           <tr className="table-row">
             <td className="table-cell">Price BTC</td>
             <td style={{color: btcData?.lastPriceUpDown === 'up' ? '#00ff88' : '#ff4d6d', fontWeight:"700"}}>
@@ -102,6 +98,7 @@ const VeilMarketData = () => {
       <h3 style={{marginTop:'14px'}}>Exchanges</h3>
       <ul>
         <li><h2><a href="https://nonkyc.io/market/VEIL_USDT" target="_blank" rel="noopener noreferrer">NonKYC · VEIL-USDT</a></h2></li>
+        <li><h2><a href="https://nonkyc.io/market/VEIL_USDC" target="_blank" rel="noopener noreferrer">NonKYC · VEIL-USDC</a></h2></li>
         <li><h2><a href="https://nonkyc.io/market/VEIL_BTC" target="_blank" rel="noopener noreferrer">NonKYC · VEIL-BTC</a></h2></li>
         <li><h2><a href="https://nonkyc.io/market/VEIL_XMR" target="_blank" rel="noopener noreferrer">NonKYC · VEIL-XMR</a></h2></li>
       </ul>

@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { PieChart } from "react-minimal-pie-chart";
-import { EXPLORER_API } from "./config";
+import DataContext from "./DataContext";
 
 const COLORS = {
   pos:     "#38bdf8",
@@ -10,41 +10,32 @@ const COLORS = {
 };
 
 function ChainalgoStats() {
-  const [stats, setStats] = useState(null);
+  const { algoStats: stats, algoError: error } = useContext(DataContext);
   const [flash, setFlash] = useState(false);
-  const [error, setError] = useState(null);
   const prev = useRef(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`${EXPLORER_API}/api/GetChainalgoStats`);
-        if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
-        const data = await response.json();
-        if (prev.current !== null && prev.current !== data.pos) {
-          setFlash(true);
-          setTimeout(() => setFlash(false), 800);
-        }
-        prev.current = data.pos;
-        setStats(data);
-        setError(null);
-      } catch (err) { setError(err); }
-    };
-    fetchData();
-    const intervalId = setInterval(fetchData, 60000);
-    return () => clearInterval(intervalId);
-  }, []);
+    if (!stats) return;
+    if (prev.current !== null && prev.current !== stats.pos) {
+      setFlash(true);
+      const t = setTimeout(() => setFlash(false), 800);
+      prev.current = stats.pos;
+      return () => clearTimeout(t);
+    }
+    prev.current = stats.pos;
+  }, [stats?.pos, stats]);
 
-  if (error) return <div>Error loading block split</div>;
+  if (error && !stats) return <div>Error loading block split</div>;
   if (!stats) return <div>Loading...</div>;
 
   const total = stats.pos + stats.progpow + stats.randomx + stats.sha256d;
+  const pct = (n) => (total > 0 ? (n / total) * 100 : 0);
 
   const chartData = [
-    { title: "PoS",     value: (stats.pos / total) * 100,     color: COLORS.pos },
-    { title: "ProgPow", value: (stats.progpow / total) * 100, color: COLORS.progpow },
-    { title: "RandomX", value: (stats.randomx / total) * 100, color: COLORS.randomx },
-    { title: "SHA256d", value: (stats.sha256d / total) * 100, color: COLORS.sha256d },
+    { title: "PoS",     value: pct(stats.pos),     color: COLORS.pos },
+    { title: "ProgPow", value: pct(stats.progpow), color: COLORS.progpow },
+    { title: "RandomX", value: pct(stats.randomx), color: COLORS.randomx },
+    { title: "SHA256d", value: pct(stats.sha256d), color: COLORS.sha256d },
   ];
 
   return (

@@ -1,29 +1,24 @@
-import { useState, useEffect, useRef } from "react";
-import { EXPLORER_API } from "./config";
+import { useState, useEffect, useRef, useContext } from "react";
+import DataContext from "./DataContext";
 
 const BestBlockHash = () => {
-  const [data, setData] = useState(null);
+  const { chain } = useContext(DataContext);
   const [flash, setFlash] = useState(false);
   const prev = useRef(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`${EXPLORER_API}/api/GetBlockchainInfo`);
-        if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
-        const result = await response.json();
-        if (prev.current !== null && prev.current !== result.bestblockhash) {
-          setFlash(true);
-          setTimeout(() => setFlash(false), 1000);
-        }
-        prev.current = result.bestblockhash;
-        setData({ hash: result.bestblockhash, blocks: result.blocks });
-      } catch (err) { console.error(err); }
-    };
-    fetchData();
-    const intervalId = setInterval(fetchData, 60000);
-    return () => clearInterval(intervalId);
-  }, []);
+    const hash = chain?.bestblockhash;
+    if (hash === undefined || hash === null) return;
+    if (prev.current !== null && prev.current !== hash) {
+      setFlash(true);
+      const t = setTimeout(() => setFlash(false), 1000);
+      prev.current = hash;
+      return () => clearTimeout(t);
+    }
+    prev.current = hash;
+  }, [chain?.bestblockhash]);
+
+  const data = chain ? { hash: chain.bestblockhash, blocks: chain.blocks } : null;
 
   return (
     <div className={`BestBlockHash ${flash ? 'flash-blue' : ''}`}>

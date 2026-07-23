@@ -1,25 +1,11 @@
-import { useState, useEffect } from "react";
-import { EXPLORER_API } from "./config";
+import { useContext } from "react";
+import DataContext from "./DataContext";
 
 const SuperBlock = () => {
-  const [info, setInfo] = useState(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`${EXPLORER_API}/api/GetBlockchainInfo`);
-        if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
-        const data = await response.json();
-        setInfo({
-          next_super_block: data.next_super_block,
-          current_block: data.blocks,
-        });
-      } catch (err) { console.error(err); }
-    };
-    fetchData();
-    const intervalId = setInterval(fetchData, 60000);
-    return () => clearInterval(intervalId);
-  }, []);
+  const { chain } = useContext(DataContext);
+  const info = chain
+    ? { next_super_block: chain.next_super_block, current_block: chain.blocks }
+    : null;
 
   const getTimeRemaining = () => {
     if (!info?.next_super_block || !info?.current_block) return null;

@@ -1,27 +1,12 @@
-import { useState, useEffect } from "react";
-import { EXPLORER_API } from "./config";
+import { useContext } from "react";
+import DataContext from "./DataContext";
 
 const Chainsize = () => {
-  const [blockchainInfo, setBlockchainInfo] = useState(null);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`${EXPLORER_API}/api/GetBlockchainInfo`);
-        if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
-        const data = await response.json();
-        setBlockchainInfo({ size_on_disk: data.size_on_disk });
-        setError(null);
-      } catch (err) { setError(err); }
-    };
-    fetchData();
-    const intervalId = setInterval(fetchData, 36000000);
-    return () => clearInterval(intervalId);
-  }, []);
+  const { chain, chainError } = useContext(DataContext);
+  const blockchainInfo = chain ? { size_on_disk: chain.size_on_disk } : null;
 
   const sizeInGB = blockchainInfo ? blockchainInfo.size_on_disk / (1024 * 1024 * 1024) : 0;
-  if (error) return <div>Error loading chain size</div>;
+  if (chainError && !blockchainInfo) return <div>Error loading chain size</div>;
 
   return (
     <div style={{textAlign:'center', display:'flex', flexDirection:'column', height:'100%'}}>
