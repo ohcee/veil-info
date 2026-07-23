@@ -1,26 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
-import { NONKYC_XMR } from "./config";
+import { useContext } from "react";
+import DataContext from "./DataContext";
 
 const HeaderTwo = () => {
-  const [veilPrice, setVeilPrice] = useState(null);
-  const prevPrice = useRef(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(NONKYC_XMR);
-        if (!response.ok) throw new Error("failed");
-        const data = await response.json();
-        const price = parseFloat(data?.lastPrice || 0);
-    
-        prevPrice.current = price;
-        setVeilPrice(data);
-      } catch (err) { console.error(err); }
-    };
-    fetchData();
-    const intervalId = setInterval(fetchData, 60000);
-    return () => clearInterval(intervalId);
-  }, []);
+  const { market } = useContext(DataContext);
+  const veilPrice = market?.xmr ?? null;
 
   return (
     <div style={{textAlign:'center', marginBottom:'8px'}}>

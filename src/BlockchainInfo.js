@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { EXPLORER_API } from "./config";
+import React, { useState, useEffect, useRef, useContext } from "react";
+import DataContext from "./DataContext";
 
 // ─── DAG Constants ───────────────────────────────────────
 const DAG_INIT_BYTES = 2147483648; // 2^31 = 2 GB
@@ -56,32 +56,18 @@ const Arrow = ({ current, prev }) => {
 
 // ─── Main Component ──────────────────────────────────────
 function BlockchainInfo() {
-  const [info, setInfo] = useState(null);
-  const [prevInfo, setPrevInfo] = useState(null);
-  const [error, setError] = useState(null);
+  const { chain: info, chainError: error } = useContext(DataContext);
   const [showDAG, setShowDAG] = useState(false);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`${EXPLORER_API}/api/GetBlockchainInfo`);
-        if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
-        const data = await response.json();
-        setPrevInfo(prev => prev === null ? null : prev);
-        setInfo(current => {
-          setPrevInfo(current);
-          return data;
-        });
-        setError(null);
-      } catch (err) { setError(err); }
-    };
-    fetchData();
-    const intervalId = setInterval(fetchData, 60000);
-    return () => clearInterval(intervalId);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // Previous snapshot for the ▲▼ difficulty arrows. The ref holds the last
+  // committed reading; on the render where `info` changes, prevRef still points
+  // at the prior value, so the arrows compare new-vs-old before the effect
+  // advances the ref.
+  const prevRef = useRef(null);
+  useEffect(() => { prevRef.current = info; }, [info]);
+  const prevInfo = prevRef.current;
 
-  if (error) return <div>Error loading blockchain info</div>;
+  if (error && !info) return <div>Error loading blockchain info</div>;
   if (!info) return <div>Loading...</div>;
 
   // DAG calculations
